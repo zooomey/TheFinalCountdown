@@ -125,8 +125,8 @@ app.post("/add", (req, res) => {
         else{ res.status(400).send(); }}
       else{ res.status(400).send(); }}
     else{ res.status(400).send(); }}
-  else{ res.status(400).send(); }
-});
+  //else{res.status(400).send(); }}
+  );
 
 
 app.get("/search", (req, res) => {
