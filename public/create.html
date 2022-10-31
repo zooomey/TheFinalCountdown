@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Log in</title>
+<link rel="stylesheet" href="main.css">
+</head>
+<body>
+	<div class="main2">
+		<h1>The Final Countdown</h1>
+		<div class="centered">
+
+		<h2>Create a new account</h2>
+
+		<table>
+			<tr>
+				<td class="right"><label name="username" for="username">Username:</label></td>
+				<td><input type="text" id="username"></td>
+			</tr>
+			<tr>
+				<td class="right"><label name="password" for="password">Password:</label></td>
+				<td><input type="password" id="password"></td>
+			</tr>
+			<tr><td><br></td></tr>
+			<tr>
+				<td><label for="task1">Add your first task:</label></td>
+				<td><input type="text" id="task1"></td>
+			</tr>
+			<tr>
+				<td class="right"><label for="estimateTime">Estimated Time:</label></td>
+				<td><input type="number" id="estimate_days" placeholder="00"> days <input type="number" id="estimate_hrs" placeholder="00"> hrs <input type="number" id="estimate_mins" placeholder="00"> mins</td>
+			</tr>
+		</table>
+
+		<button id="create" class="button button1">Create account</button>
+	</div>
+		<div id="result">&nbsp;</div>
+
+		<p>Already have an account? Log in <a href="login.html">here</a>.</p>
+	</div>
+
+<script src="create.js"></script>
+
+</body>
+</html>
