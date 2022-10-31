@@ -1,7 +1,0 @@
-{
-	"user": "postgres",
-	"host": "localhost",
-	"database": "finalcountdown",
-	"password": "27Hilden",
-	"port": 5432
-}
