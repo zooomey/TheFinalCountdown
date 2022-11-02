@@ -1,0 +1,107 @@
+@font-face {
+	font-family: powerdark;
+	src: url('powerdark.ttf');
+}
+body {
+	font-size: 15px;
+	font-family: sans-serif;
+}
+a:hover {
+	color: red;
+	text-decoration: none;
+	font-weight: bold;
+}
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:active { text-decoration: none; }
+h1 {
+	font-family: powerdark;
+	font-size: 40px;
+	text-shadow: 3px 2px #cee1a5;
+}
+.error {
+	color: red;
+}
+div.main1 {
+	background-color: #c2d6d6;
+	width: 350px;
+	padding: 40px;
+	border-radius: 40px;
+	box-shadow: 0 3px 10px #a7ad9b;
+}
+div.main2 {
+	background-color: #b8d1d9;
+	width: 350px;
+	padding: 40px;
+	border-radius: 40px;
+	box-shadow: 0 3px 10px #a7ad9b;
+}
+.centered {
+	align-items: center;
+	margin: 5px;
+	padding: 0;
+}
+.button {
+  display: block;
+  width: 93%;
+  border: none;
+  background-color: #e0ebeb;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+	border-radius: 10px;
+	transition-duration: 0.4s;
+}
+.button1 {
+  background-color: #04AA6D;
+  color: black;
+}
+.button1:hover {
+	background-color: #6fbc58;
+}
+input {
+    font-size: 14px;
+}
+input[type=number] {
+	font-size: 14px;
+	width: 21px;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.right {
+	text-align: right;
+}
+
+/* login sidebar */
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
