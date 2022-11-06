@@ -12,6 +12,12 @@ div.home{
 body {
   background-color: lightgray;
 }
+input.timer_input {
+	width: 1.2em;
+}
+::placeholder {
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -49,7 +55,18 @@ body {
   temporary div for some welcome info
 </div>
 <div class="home">
-  temporary div for a timer
+  <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+  <span id="display_hours"></span>
+  <span>:</span>
+  <input type="text" class="timer_input" id="input_minutes" placeholder="m" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+  <span id="display_minutes"></span>
+  <span>:</span>
+  <input type="text" class="timer_input" id="input_seconds" placeholder="s" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+  <span id="display_seconds"></span>
+  <button id="timer_start">Start</button>
+  <button id="timer_pause">Pause</button>
+  <button id="timer_stop">Stop</button>
+  <button id="timer_finish">Finish</button>
 </div>
 <div class="home">
 	temporary div for user tasks
@@ -59,6 +76,7 @@ body {
 </div>
 
 <script src="login.js"></script>
+<script src="timer.js"></script>
 <script>
 function openNav() {
   document.getElementById("mySidenav").style.width = "450px";
