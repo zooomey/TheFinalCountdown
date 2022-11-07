@@ -1,13 +1,14 @@
 // make form: task name, description
+let button = document.getElementById("push");
+let tasks = document.getElementById("tasks")
 
-
-document.querySelector('#push').onclick = function(){
+button.addEventListener("click", () => {
     if(document.querySelector('#newtask input').value.length == 0){
-        alert("Kindly Enter Task Name!!!!")
+        alert("Enter Task Name!!!!")
     }
 
     else{
-        document.querySelector('#tasks').innerHTML += `
+        document.get(tasks).innerHTML += `
             <div class="task">
                 <span id="taskname">
                     ${document.querySelector('#newtask input').value}
@@ -25,4 +26,5 @@ document.querySelector('#push').onclick = function(){
             }
         }
     }
-}
+
+});
