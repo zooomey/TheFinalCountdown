@@ -4,7 +4,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "cd app && node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -22,5 +22,5 @@
     "url": "https://github.com/zooomey/TheFinalCountdown/issues"
   },
   "homepage": "https://github.com/zooomey/TheFinalCountdown#readme",
-  "description": ""
+  "description": "SETUP LOCALLY (for devs)\r psql --username USERNAME -f setup.sql\r otherwise"
 }

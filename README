@@ -1,3 +1,7 @@
 SETUP LOCALLY (for devs)
 psql --username USERNAME -f setup.sql
 otherwise
+
+add node_modules to gitignore
+
+have make sure to cd into app to run npm install
