@@ -106,7 +106,7 @@ input[type=number] {
   .sidenav a {font-size: 18px;}
 }
 
-/* *,
+*,
 *:before,
 *:after{
     padding: 0;
@@ -117,17 +117,7 @@ body{
     height: 100vh;
     background: #066acd;
 }
-.container{
-    width: 40%;
-    top: 50%;
-    left: 50%;
-    background: white;
-    border-radius: 10px;
-    min-width: 450px;
-    position: absolute;
-    min-height: 100px;
-    transform: translate(-50%,-50%);
-}
+
 #newtask{
     position: relative;
     padding: 30px 20px;
@@ -199,4 +189,4 @@ body{
     height: 100%;
     width: 40px;
     border-radius: 5px;
-} */
+}

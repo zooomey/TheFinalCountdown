@@ -1,10 +1,10 @@
-// make form: task name, description
+//  source: https://www.educative.io/answers/how-to-create-a-simple-to-do-list-with-html-css-and-js
 let button = document.getElementById("push");
 let tasks = document.getElementById("tasks")
 
 button.addEventListener("click", () => {
     if(document.querySelector('#newtask input').value.length == 0){
-        alert("Enter Task Name!!!!");
+        alert("Enter A Task Name!");
     }
 
     else{
