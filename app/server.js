@@ -24,12 +24,10 @@ app.post("/signup", (req, res) => {
       let plaintextPassword = req.body.plaintextPassword;
       let tasks = req.body.tasks;
 
-      //console.log(username, " = ", plaintextPassword);
-/*
       if ((typeof username === 'string') && (typeof plaintextPassword === 'string')){
         if ((username.length >= 1)  && (username.length <= 25)){
           if ((plaintextPassword.length >= 1) && (plaintextPassword.length <= 36)){
-*/
+
             pool.query(
                 "SELECT * FROM users WHERE username = $1", [username]
             )
@@ -37,27 +35,15 @@ app.post("/signup", (req, res) => {
                     console.log("RESULT :", result.rows.length);
 
                     if (result.rows.length > 0){ //user already exists
-                              pool.query(
-                                  "UPDATE users WHERE username = $1 SET tasks = $1",
-                                  [tasks]
-                              )
-                                  .then(() => {
-                                      // account created
-                                      console.log(username, "task added");
-                                      res.status(200).send();
-                                  })
-                                  .catch((error) => {
-                                      // insert failed
-                                      console.log(error);
-                                      res.status(500).send();
-                                  });
+                        console.log(username, "this user name is taken");
+                        res.status(200).send();
                           }
                     else{
                         bcrypt
                             .hash(plaintextPassword, saltRounds)
                             .then((hashedPassword) => {
                                 pool.query(
-                                    "INSERT INTO users (username, hashed_password, tasks) VALUES ($1, $2, $3)",
+                                    "INSERT INTO users (username, hashed_password) VALUES ($1, $2)",
                                     [username, hashedPassword, tasks]
                                 )
                                 .then(() => {
@@ -79,12 +65,11 @@ app.post("/signup", (req, res) => {
                 }
               });
             }
-            else{ res.status(401).send(); }});
-            /*
+            else{ res.status(401).send(); }}
         else{ res.status(401).send(); }}
       else{ res.status(401).send(); }}
     else{ res.status(401).send(); }
-});*/
+});
 
 app.post("/signin", (req, res) => {
     let username = req.body.username;
@@ -97,21 +82,23 @@ app.post("/signin", (req, res) => {
                 // username doesn't exist
                 return res.status(401).send();
             }
-            let hashedPassword = result.rows[0].hashed_password;
-            bcrypt
-                .compare(plaintextPassword, hashedPassword)
-                .then((passwordMatched) => {
-                    if (passwordMatched) {
-                        res.status(200).send();
-                    } else {
-                        res.status(401).send();
-                    }
-                })
-                .catch((error) => {
-                    // bcrypt crashed
-                    console.log(error);
-                    res.status(500).send();
-                });
+            else{ // check pw
+              let hashedPassword = result.rows[0].hashed_password;
+              bcrypt
+                  .compare(plaintextPassword, hashedPassword)
+                  .then((passwordMatched) => {
+                      if (passwordMatched) {
+                          res.status(200).send();
+                      } else {
+                          res.status(401).send();
+                      }
+                  })
+                  .catch((error) => {
+                      // bcrypt crashed
+                      console.log(error);
+                      res.status(500).send();
+                  });
+            }
         })
         .catch((error) => {
             // select crashed
@@ -121,27 +108,59 @@ app.post("/signin", (req, res) => {
 });
 
 
-app.post("/add", (req, res) => {
-
+app.post("/add_task", (req, res) => {
+/*
+CREATE TABLE tasks (
+    taskID SERIAL PRIMARY KEY,
+    userID VARCHAR(25),
+    taskname VARCHAR(25),
+    description VARCHAR,
+    total NUMERIC,
+    completed BOOLEAN,
+    abandoned BOOLEAN
+);*/
+  let userid = req.body.userid;
   let taskname = req.body.taskname;
-  let estimate = req.body.estimate;
-  let workhrs = req.body.workhrs;
-  let complete = req.body.complete;
+  let description = req.body.description;
+  let total = 0;
+  let completed = false;
+  let abandoned = false;
 
   if (taskname && estimate && workhrs){
     if (taskname.length <= 15 && taskname.length >= 1){
-        if (complete == "yes" || complete == "no"){
-          pool.query('INSERT INTO tasks (taskname, estimate, workhrs, complete) VALUES ($1, $2, $3, $4)', [taskname, estimate, workhrs, complete]);
-          res.status(200).send();
-        }
-        else{ res.status(400).send(); }}
-      else{ res.status(400).send(); }}
+        pool.query('INSERT INTO tasks (userID, taskname, description, total, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6)', [userid, taskname, description, total, completed, abandoned]);
+        res.status(200).send();
+    }
     else{ res.status(400).send(); }}
-  //else{res.status(400).send(); }}
-  );
+  else{ res.status(400).send(); }}
+);
+
+app.post("/add_session", (req, res) => {
+/* every time the user clicks STOP a new session is added
+CREATE TABLE sessions (
+    sessionID SERIAL PRIMARY KEY,
+    userID VARCHAR(25),
+    taskID VARCHAR(25),
+    seconds NUMERIC,
+    finished TIMESTAMP
+);*/
+  let userid = req.body.userid;
+  let taskid = req.body.taskid;
+  let seconds = req.body.seconds;
+  let finished = req.body.finished;
+
+  if (taskname && estimate && workhrs){
+    if (taskname.length <= 15 && taskname.length >= 1){
+        pool.query('INSERT INTO tasks (userID, taskname, description, total, completed) VALUES ($1, $2, $3, $4)', [userid, taskid, seconds, finished]);
+        res.status(200).send();
+    }
+    else{ res.status(400).send(); }}
+  else{ res.status(400).send(); }}
+);
 
 
 app.get("/search", (req, res) => {
+// SEARCH function still in-progress
 
   if (req.query.taskname){
     pool.query(`SELECT * FROM tasks WHERE taskname = '${req.query.taskname}'`).then(result => {
