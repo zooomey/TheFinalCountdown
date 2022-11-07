@@ -4,11 +4,11 @@ let tasks = document.getElementById("tasks")
 
 button.addEventListener("click", () => {
     if(document.querySelector('#newtask input').value.length == 0){
-        alert("Enter Task Name!!!!")
+        alert("Enter Task Name!!!!");
     }
 
     else{
-        document.get(tasks).innerHTML += `
+        document.querySelector('#tasks').innerHTML += `
             <div class="task">
                 <span id="taskname">
                     ${document.querySelector('#newtask input').value}
@@ -18,6 +18,8 @@ button.addEventListener("click", () => {
                 </button>
             </div>
         `;
+
+        //deleting tasks
 
         var current_tasks = document.querySelectorAll(".delete");
         for(var i=0; i<current_tasks.length; i++){
