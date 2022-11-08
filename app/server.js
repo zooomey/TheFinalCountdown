@@ -22,7 +22,6 @@ app.post("/signup", (req, res) => {
     if (req.body.username && req.body.plaintextPassword){
       let username = req.body.username;
       let plaintextPassword = req.body.plaintextPassword;
-      let tasks = req.body.tasks;
 
       if ((typeof username === 'string') && (typeof plaintextPassword === 'string')){
         if ((username.length >= 1)  && (username.length <= 25)){
@@ -44,7 +43,7 @@ app.post("/signup", (req, res) => {
                             .then((hashedPassword) => {
                                 pool.query(
                                     "INSERT INTO users (username, hashed_password) VALUES ($1, $2)",
-                                    [username, hashedPassword, tasks]
+                                    [username, hashedPassword]
                                 )
                                 .then(() => {
                                     // account created
