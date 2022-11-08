@@ -1,16 +1,16 @@
 let usernameInput = document.getElementById("username");
 let passwordInput = document.getElementById("password");
-let task1 = document.getElementById("task1");
-let days = document.getElementById("estimate_days");
-let hrs = document.getElementById("estimate_hrs");
-let mins = document.getElementById("estimate_mins");
+//let task1 = document.getElementById("task1");
+//let days = document.getElementById("estimate_days");
+//let hrs = document.getElementById("estimate_hrs");
+//let mins = document.getElementById("estimate_mins");
 
 let result = document.getElementById("result");
 
 document.getElementById("create").addEventListener("click", () => {
 
-	let estimate = {"days": days.value, "hrs": hrs.value, "mins": mins.value};
-	let data = {"task name": task1.value, "estimate": estimate, "total-work-hrs": 0, "completed": false};
+	//let estimate = {"days": days.value, "hrs": hrs.value, "mins": mins.value};
+	//let data = {"task name": task1.value, "estimate": estimate, "total-work-hrs": 0, "completed": false};
 
 	fetch("/signup", {
 		method: "POST",
@@ -19,8 +19,7 @@ document.getElementById("create").addEventListener("click", () => {
 		},
 		body: JSON.stringify({
 			username: usernameInput.value,
-			plaintextPassword: passwordInput.value,
-			tasks: data
+			plaintextPassword: passwordInput.value
 		})
 	}).then((response) => {
 		if (response.status === 200) {
