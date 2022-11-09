@@ -19,6 +19,8 @@ button.addEventListener("click", () => {
             </div>
         `;
 
+        //TODO: get rid of innerHTML
+
         //deleting tasks
 
         var current_tasks = document.querySelectorAll(".delete");
