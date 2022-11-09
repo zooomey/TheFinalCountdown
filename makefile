@@ -1,3 +1,3 @@
 express:
-	npm install
-	psql --username postgres -f setup.sql 
+	npm init
+	psql --username postgres -f setup.sql
