@@ -73,13 +73,14 @@ app.post("/signup", (req, res) => {
 app.post("/signin", (req, res) => {
     let username = req.body.username;
     let plaintextPassword = req.body.plaintextPassword;
+
     pool.query("SELECT hashed_password FROM users WHERE username = $1", [
         username,
     ])
         .then((result) => {
             if (result.rows.length === 0) {
                 // username doesn't exist
-                return res.status(401).send();
+                return res.status(401).json({status: 401});
             }
             else{ // check pw
               let hashedPassword = result.rows[0].hashed_password;
@@ -87,7 +88,12 @@ app.post("/signin", (req, res) => {
                   .compare(plaintextPassword, hashedPassword)
                   .then((passwordMatched) => {
                       if (passwordMatched) {
-                          res.status(200).send();
+                        pool.query("SELECT * FROM users WHERE username = $1", [
+                          username,
+                        ])
+                          .then((result) => {
+                            res.status(200).json({"username": result.rows[0].username, status: 200});
+                          });
                       } else {
                           res.status(401).send();
                       }
