@@ -8,7 +8,7 @@ button.addEventListener("click", () => {
     }
 
     else{
-        document.querySelector('#tasks').textContent += `
+        document.querySelector('#tasks').innerHTML += `
             <div class="task">
                 <span id="taskname">
                     ${document.querySelector('#newtask input').value}
