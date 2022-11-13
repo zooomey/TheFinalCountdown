@@ -19,31 +19,30 @@ body {
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 	<div id="main">
-		<h1>The Final Countdown</h1>
-		<div class="centered">
-			<h2>Log in</h2>
-			<table>
-				<tr>
-					<td><label name="username" for="username">Username:</label></td>
-					<td><input type="text" id="username"></td>
-				</tr>
-				<tr>
-					<td><label name="password" for="password">Password:</label></td>
-					<td><input type="password" id="password"></td>
-				</tr>
-			</table>
-
-			<button id="login" class="button button1">Log in</button>
-
-			<div id="result">&nbsp;</div>
-		</div>
-
-		<p>Need an account? Create an account <a id="create">here</a>.</p>
+    <h1>The Final Countdown</h1><br/>
+    <div id="NAV" class="centered">
+      <div>
+  			<h2 id="NAV_title">Log in</h2>
+  			<table>
+  				<tr>
+  					<td><label name="username" for="username">Username:</label></td>
+  					<td><input type="text" id="username"></td>
+  				</tr>
+  				<tr>
+  					<td><label name="password" for="password">Password:</label></td>
+  					<td><input type="password" id="password"></td>
+  				</tr>
+  			</table>
+  			<button id="login_button" class="button button1">Log in</button>
+  			<div id="result">&nbsp;</div>
+  		</div>
+      <p><span id="login_nav_text">Need an account? Create an account </span><a id="swap_nav" class="create_nav">here</a>.</p>
+    </div>
 	</div>
 </div>
 
 <div>
-	<span id="SIGNIN" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; SIGN IN</span>
+	<span style="font-size:30px;cursor:pointer" onclick="openNav()"> &nbsp; &nbsp; &#9776; <span id="SIGNIN" >SIGN IN<span></span>
 </div>
 <div class="home">
   temporary div for some welcome info
@@ -77,6 +76,7 @@ body {
 </div>
 
 <script src="login.js"></script>
+<script src="swap_nav.js"></script>
 <script src="timer.js"></script>
 <script src="tasks.js"></script>
 
