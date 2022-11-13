@@ -2,6 +2,7 @@ let usernameInput = document.getElementById("username");
 let passwordInput = document.getElementById("password");
 let result = document.getElementById("result");
 let login = document.getElementById("login");
+let nav = document.getElementById("SIGNIN");
 let create = document.getElementById("create");
 
 login.addEventListener("click", () => {
@@ -19,6 +20,7 @@ login.addEventListener("click", () => {
 			if (data.status === 200) {
 				var username = data.username;
 				result.textContent = "Login successful. Welcome " + username + "!";
+				nav.textContent = "Welcome to The Final Countdown " + username + "!";
 				result.classList.remove("error");
 				console.log("Login successful. Welcome ", data.username);
 			} else {
@@ -31,7 +33,7 @@ login.addEventListener("click", () => {
 });
 
 /*
-//placeholder for function to redirect to dashboard page after user signed-in
+//placeholder for function to redirect to dashboard page
 
 create.addEventListener("click", () => {
 	fetch("/create").then(response => {

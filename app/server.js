@@ -187,17 +187,37 @@ app.post("/update_session", (req, res) => {
   }
 })
 
-app.get("/search", (req, res) => {
-// SEARCH function still in-progress
+app.post("/search/tasks", (req, res) => {
+  let userid = req.body.userid;
 
   if (req.query.taskname){
     pool.query(`SELECT * FROM tasks WHERE taskname = '${req.query.taskname}'`).then(result => {
+        res.status(200).json({"rows": result.rows, status: 200});
+    });
+  }
+  else{
+    pool.query("SELECT * FROM tasks WHERE userID = $1", [
+      userid,
+    ]).then(result => {
         res.status(200);
         res.json({"rows": result.rows});
     });
   }
+});
+
+
+app.post("/search/sessions", (req, res) => {
+  let userid = req.body.userid;
+
+  if (req.query.taskname){
+    pool.query(`SELECT * FROM sessions WHERE taskname = '${req.query.taskname}'`).then(result => {
+        res.status(200).json({"rows": result.rows, status: 200});
+    });
+  }
   else{
-    pool.query("SELECT * FROM tasks").then(result => {
+    pool.query("SELECT * FROM sessions WHERE userID = $1", [
+      userid,
+    ]).then(result => {
         res.status(200);
         res.json({"rows": result.rows});
     });
