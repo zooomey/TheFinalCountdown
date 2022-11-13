@@ -148,17 +148,18 @@ CREATE TABLE sessions (
     userID NUMERIC,
     taskID NUMERIC,
     seconds NUMERIC,
-    session_date TIMESTAMP
+    start_date TIMESTAMP,
+    stop_date TIMESTAMP
 );
 */
 // Is there a way to ensure only the correct user can change their tasks?
 // Validate userID and taskID
   let userid = req.body.userid;
   let taskid = req.body.taskid;
-  let sessiondate = req.body.["session_date"];
+  let start_date = req.body.["start_date"]; 
 
   if (userid && taskid) {
-    pool.query('INSERT INTO sessions (userID, taskID, seconds, session_date) VALUES ($1, $2, $3, $4) RETURNING sessionid', [userid, taskid, 0, sessiondate]).then(result => {
+    pool.query('INSERT INTO sessions (userID, taskID, seconds, start_date) VALUES ($1, $2, $3, $4) RETURNING sessionid', [userid, taskid, 0, start_date]).then(result => {
       res.json({sessionID: result.rows[0].sessionid});
     }).catch((error) => {
       res.status(500).send();
@@ -176,10 +177,10 @@ app.post("/update_session", (req, res) => {
 // Is it already finished?
   let sessionid = req.body.sessionid;
   let seconds = req.body.seconds;
-  let finished = req.body.finished;
+  let stop_date = req.body.stop_date;
 
   if(sessionid && seconds) {
-    pool.query("UPDATE sessions SET seconds = $1, finished = $2 WHERE sessionid = $3", [seconds, finished, sessionid]).then((result) => {
+    pool.query("UPDATE sessions SET seconds = $1, stop_date = $2 WHERE sessionid = $3", [seconds, stop_date, sessionid]).then((result) => {
       res.send();
     }).catch((error) => {
       res.status(500).send();
