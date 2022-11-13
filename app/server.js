@@ -148,7 +148,8 @@ CREATE TABLE sessions (
     userID NUMERIC,
     taskID NUMERIC,
     seconds NUMERIC,
-    finished BOOLEAN
+    start_date TIMESTAMP,
+    stop_date TIMESTAMP
 );
 */
 // Is there a way to ensure only the correct user can change their tasks?
@@ -166,6 +167,7 @@ CREATE TABLE sessions (
   }
   else{ res.status(400).send(); }}
 );
+
 
 app.post("/update_session", (req, res) => {
 // Session is updated when the timer resumes/stops/finishes or a minute passes on the timer
@@ -186,7 +188,8 @@ app.post("/update_session", (req, res) => {
   } else {
     res.status(400).send();
   }
-})
+});
+
 
 app.post("/search/tasks", (req, res) => {
   let userid = req.body.userid;
