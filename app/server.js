@@ -155,9 +155,10 @@ CREATE TABLE sessions (
 // Validate userID and taskID
   let userid = req.body.userid;
   let taskid = req.body.taskid;
+  let date = req.body.date;
 
-  if (userid && taskid) {
-    pool.query('INSERT INTO sessions (userID, taskID, seconds, finished) VALUES ($1, $2, $3, $4) RETURNING sessionid', [userid, taskid, 0, false]).then(result => {
+  if (userid && taskid && date) {
+    pool.query('INSERT INTO sessions (userID, taskID, seconds, start_date, stop_date) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($5)) RETURNING sessionid', [userid, taskid, 0, date, date]).then(result => {
       res.json({sessionID: result.rows[0].sessionid});
     }).catch((error) => {
       res.status(500).send();
@@ -174,10 +175,10 @@ app.post("/update_session", (req, res) => {
 // Is it already finished?
   let sessionid = req.body.sessionid;
   let seconds = req.body.seconds;
-  let finished = req.body.finished;
+  let date = req.body.date;
 
-  if(sessionid && seconds) {
-    pool.query("UPDATE sessions SET seconds = $1, finished = $2 WHERE sessionid = $3", [seconds, finished, sessionid]).then((result) => {
+  if(sessionid && seconds && date) {
+    pool.query("UPDATE sessions SET seconds = $1, stop_date = to_timestamp($2) WHERE sessionid = $3", [seconds, date, sessionid]).then((result) => {
       res.send();
     }).catch((error) => {
       res.status(500).send();

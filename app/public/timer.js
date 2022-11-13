@@ -35,29 +35,6 @@ function resetTimer() {
     finishButton.style.display = "none";
 }
 
-function updateSession(finished) {
-    return fetch("/update_session", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            sessionid: sessionID,
-            seconds: displayTime,
-            finished: finished
-        })
-    }).then((response) => {
-        if (response.status === 200) {
-            console.log(true);
-            return true;
-        } else {
-            return false;
-        }
-    }).catch((error) => {
-        return false;
-    });
-}
-
 hourDisplay.style.display = "none";
 minuteDisplay.style.display = "none";
 secondDisplay.style.display = "none";
@@ -86,14 +63,14 @@ startButton.addEventListener("click", () => {
                 // taskID should come from task.js
                 // Placeholders
                 userid: 4,
-                taskid: 1
+                taskid: 1,
+                date: Date.now() / 1000
             })
         }).then((response) => {
             if (response.status === 200) {
                 response.json().then((body) => {
                     timerError.textContent = "";
                     sessionID = body.sessionID;
-                    let titleFlash = false;
 
                     let hourString = String(Math.floor(timeLimit / 3600)).padStart(2, "0");
                     let minuteString = String(Math.floor((timeLimit % 3600) / 60)).padStart(2, "0");
@@ -128,7 +105,7 @@ startButton.addEventListener("click", () => {
                                     body: JSON.stringify({
                                         sessionid: sessionID,
                                         seconds: displayTime,
-                                        finished: false
+                                        date: Date.now() / 1000
                                     })
                                 }).then((response) => {
                                     if (response.status !== 200) {
@@ -181,7 +158,7 @@ pauseButton.addEventListener("click", () => {
             body: JSON.stringify({
                 sessionid: sessionID,
                 seconds: displayTime,
-                finished: false
+                date: Date.now() / 1000
             })
         }).then((response) => {
             if (response.status === 200) {
@@ -209,7 +186,7 @@ stopButton.addEventListener("click", () => {
         body: JSON.stringify({
             sessionid: sessionID,
             seconds: displayTime,
-            finished: false
+            date: Date.now() / 1000
         })
     }).then((response) => {
         if (response.status === 200) {
@@ -228,6 +205,7 @@ stopButton.addEventListener("click", () => {
 });
 
 finishButton.addEventListener("click", () => {
+    // Also update task list to mark task as complete
     fetch("/update_session", {
         method: "POST",
         headers: {
@@ -236,7 +214,7 @@ finishButton.addEventListener("click", () => {
         body: JSON.stringify({
             sessionid: sessionID,
             seconds: displayTime,
-            finished: true
+            date: Date.now() / 1000
         })
     }).then((response) => {
         if (response.status === 200) {
