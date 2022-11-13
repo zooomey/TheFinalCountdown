@@ -141,28 +141,51 @@ CREATE TABLE tasks (
 );
 
 app.post("/add_session", (req, res) => {
-/* every time the user clicks STOP a new session is added
+/*
+New session is created when the start button is clicked
 CREATE TABLE sessions (
     sessionID SERIAL PRIMARY KEY,
-    userID VARCHAR(25),
-    taskID VARCHAR(25),
+    userID NUMERIC,
+    taskID NUMERIC,
     seconds NUMERIC,
-    finished TIMESTAMP
-);*/
+    finished BOOLEAN
+);
+*/
+// Is there a way to ensure only the correct user can change their tasks?
+// Validate userID and taskID
   let userid = req.body.userid;
   let taskid = req.body.taskid;
-  let seconds = req.body.seconds;
-  let finished = req.body.finished;
 
-  if (taskname && estimate && workhrs){
-    if (taskname.length <= 15 && taskname.length >= 1){
-        pool.query('INSERT INTO tasks (userID, taskname, description, total, completed) VALUES ($1, $2, $3, $4)', [userid, taskid, seconds, finished]);
-        res.status(200).send();
-    }
-    else{ res.status(400).send(); }}
+  if (userid && taskid) {
+    pool.query('INSERT INTO sessions (userID, taskID, seconds, finished) VALUES ($1, $2, $3, $4) RETURNING sessionid', [userid, taskid, 0, false]).then(result => {
+      res.json({sessionID: result.rows[0].sessionid});
+    }).catch((error) => {
+      res.status(500).send();
+    });
+  }
   else{ res.status(400).send(); }}
 );
 
+app.post("/update_session", (req, res) => {
+// Session is updated when the timer resumes/stops/finishes or a minute passes on the timer
+// Is there a way to ensure only the correct user can change their tasks?
+// Does the specified session even exist?
+// Is new seconds value >= current seconds value?
+// Is it already finished?
+  let sessionid = req.body.sessionid;
+  let seconds = req.body.seconds;
+  let finished = req.body.finished;
+
+  if(sessionid && seconds) {
+    pool.query("UPDATE sessions SET seconds = $1, finished = $2 WHERE sessionid = $3", [seconds, finished, sessionid]).then((result) => {
+      res.send();
+    }).catch((error) => {
+      res.status(500).send();
+    });
+  } else {
+    res.status(400).send();
+  }
+})
 
 app.get("/search", (req, res) => {
 // SEARCH function still in-progress

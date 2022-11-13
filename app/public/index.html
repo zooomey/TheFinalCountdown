@@ -12,12 +12,6 @@ div.home{
 body {
   background-color: lightgray;
 }
-input.timer_input {
-	width: 1.2em;
-}
-::placeholder {
-	text-align: center;
-}
 </style>
 </head>
 <body>
@@ -54,7 +48,7 @@ input.timer_input {
 <div class="home">
   temporary div for some welcome info
 </div>
-<div class="home">
+<div id="timer" class="home">
   <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
   <span id="display_hours"></span>
   <span>:</span>
@@ -67,6 +61,7 @@ input.timer_input {
   <button id="timer_pause">Pause</button>
   <button id="timer_stop">Stop</button>
   <button id="timer_finish">Finish</button>
+  <span id="timer_error"></span>
 </div>
 
 <div class="container">
