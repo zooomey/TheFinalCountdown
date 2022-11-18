@@ -190,3 +190,9 @@ body{
     width: 40px;
     border-radius: 5px;
 }
+input.timer_input {
+	width: 1.5em;
+}
+::placeholder {
+	text-align: center;
+}

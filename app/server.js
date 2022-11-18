@@ -2,11 +2,13 @@ let express = require("express");
 let { Pool } = require("pg");
 let bcrypt = require("bcrypt");
 let env = require("../env.json");
+let cookieParser = require("cookie-parser");
 
 let hostname = "localhost";
 let port = 3000;
 let app = express();
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
 
@@ -16,6 +18,14 @@ pool.connect().then(() => {
 });
 
 let saltRounds = 10;
+let sessionCookies = []; //hold cookies
+
+
+app.get('/', function (req, res) {
+  //console.log('Cookies: ', req.cookies);
+  //could add function here to unhash and validate cookie before every request
+
+});
 
 app.post("/signup", (req, res) => {
 
@@ -73,13 +83,14 @@ app.post("/signup", (req, res) => {
 app.post("/signin", (req, res) => {
     let username = req.body.username;
     let plaintextPassword = req.body.plaintextPassword;
+
     pool.query("SELECT hashed_password FROM users WHERE username = $1", [
         username,
     ])
         .then((result) => {
             if (result.rows.length === 0) {
                 // username doesn't exist
-                return res.status(401).send();
+                return res.status(401).json({status: 401});
             }
             else{ // check pw
               let hashedPassword = result.rows[0].hashed_password;
@@ -87,7 +98,21 @@ app.post("/signin", (req, res) => {
                   .compare(plaintextPassword, hashedPassword)
                   .then((passwordMatched) => {
                       if (passwordMatched) {
-                          res.status(200).send();
+                        pool.query("SELECT * FROM users WHERE username = $1", [
+                          username,
+                        ])
+                          .then((result) => {
+                            //generate session cookie
+                            /*
+                            var cookieID = math.random(1000);
+                            sessionCookies[cookieID].push([username, cookieID, date]);
+                            bcrypt
+                              .hash(cookieID, saltRounds)
+                              .then((hashedCookie) => {
+                                  res.status(200).setCookie({sessionID: {userID: userID, username: username, cookie: hashedCookie}, status: 200});
+                                }*/
+                                res.status(200).json({"username": result.rows[0].username, status: 200});
+                          });
                       } else {
                           res.status(401).send();
                       }
@@ -135,40 +160,89 @@ CREATE TABLE tasks (
 );
 
 app.post("/add_session", (req, res) => {
-/* every time the user clicks STOP a new session is added
+/*
+New session is created when the start button is clicked
 CREATE TABLE sessions (
     sessionID SERIAL PRIMARY KEY,
-    userID VARCHAR(25),
-    taskID VARCHAR(25),
+    userID NUMERIC,
+    taskID NUMERIC,
     seconds NUMERIC,
-    finished TIMESTAMP
-);*/
+    start_date TIMESTAMP,
+    stop_date TIMESTAMP
+);
+*/
+// Is there a way to ensure only the correct user can change their tasks?
+// Validate userID and taskID
   let userid = req.body.userid;
   let taskid = req.body.taskid;
-  let seconds = req.body.seconds;
-  let finished = req.body.finished;
+  let date = req.body.date;
 
-  if (taskname && estimate && workhrs){
-    if (taskname.length <= 15 && taskname.length >= 1){
-        pool.query('INSERT INTO tasks (userID, taskname, description, total, completed) VALUES ($1, $2, $3, $4)', [userid, taskid, seconds, finished]);
-        res.status(200).send();
-    }
-    else{ res.status(400).send(); }}
+  if (userid && taskid && date) {
+    pool.query('INSERT INTO sessions (userID, taskID, seconds, start_date, stop_date) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($5)) RETURNING sessionid', [userid, taskid, 0, date, date]).then(result => {
+      res.json({sessionID: result.rows[0].sessionid});
+    }).catch((error) => {
+      res.status(500).send();
+    });
+  }
   else{ res.status(400).send(); }}
 );
 
 
-app.get("/search", (req, res) => {
-// SEARCH function still in-progress
+app.post("/update_session", (req, res) => {
+// Session is updated when the timer resumes/stops/finishes or a minute passes on the timer
+// Is there a way to ensure only the correct user can change their tasks?
+// Does the specified session even exist?
+// Is new seconds value >= current seconds value?
+// Is it already finished?
+  let sessionid = req.body.sessionid;
+  let seconds = req.body.seconds;
+  let date = req.body.date;
+    
+  console.log('Cookies: ', req.cookies);
+
+  if(sessionid && seconds && date) {
+    pool.query("UPDATE sessions SET seconds = $1, stop_date = to_timestamp($2) WHERE sessionid = $3", [seconds, date, sessionid]).then((result) => {
+      res.send();
+    }).catch((error) => {
+      res.status(500).send();
+    });
+  } else {
+    res.status(400).send();
+  }
+});
+
+
+app.post("/search/tasks", (req, res) => {
+  let userid = req.body.userid;
 
   if (req.query.taskname){
     pool.query(`SELECT * FROM tasks WHERE taskname = '${req.query.taskname}'`).then(result => {
+        res.status(200).json({"rows": result.rows, status: 200});
+    });
+  }
+  else{
+    pool.query("SELECT * FROM tasks WHERE userID = $1", [
+      userid,
+    ]).then(result => {
         res.status(200);
         res.json({"rows": result.rows});
     });
   }
+});
+
+
+app.post("/search/sessions", (req, res) => {
+  let userid = req.body.userid;
+
+  if (req.query.taskname){
+    pool.query(`SELECT * FROM sessions WHERE taskname = '${req.query.taskname}'`).then(result => {
+        res.status(200).json({"rows": result.rows, status: 200});
+    });
+  }
   else{
-    pool.query("SELECT * FROM tasks").then(result => {
+    pool.query("SELECT * FROM sessions WHERE userID = $1", [
+      userid,
+    ]).then(result => {
         res.status(200);
         res.json({"rows": result.rows});
     });

@@ -1,7 +1,12 @@
-SETUP LOCALLY (for devs)
-psql --username USERNAME -f setup.sql
-otherwise
+The Final Countdown! hello
 
-add node_modules to gitignore
+Instructions on running our app:
+- Running make express should run our makefile, located in the project. 
+- This makefile should install all necessary packages, as well as run setup.sql, which will create the DB.
+- -> You will likely need to log into postgres.
+- -> cd into app, and run node server.js. This will start our server.
 
-have make sure to cd into app to run npm install
+
+Troubleshooting:
+- We have encountered an occasional issue where authentication will fail due to env.json not having the intended credentials (since all of the devs credentials are different)
+- We have been working around this by keeping our own credentials in env.json. You may likely need to change the username and password variables in env.json to get the server to run correctly.

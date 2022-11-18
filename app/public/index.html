@@ -12,49 +12,67 @@ div.home{
 body {
   background-color: lightgray;
 }
-input.timer_input {
-	width: 1.2em;
-}
-::placeholder {
-	text-align: center;
-}
 </style>
 </head>
 <body>
 
+
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<div class="main1">
-		<h1>The Final Countdown</h1>
-		<div class="centered">
-			<h2>Log in</h2>
-			<table>
-				<tr>
-					<td><label name="username" for="username">Username:</label></td>
-					<td><input type="text" id="username"></td>
-				</tr>
-				<tr>
-					<td><label name="password" for="password">Password:</label></td>
-					<td><input type="password" id="password"></td>
-				</tr>
-			</table>
-
-			<button id="login" class="button button1">Log in</button>
-
-			<div id="result">&nbsp;</div>
-		</div>
-
-		<p>Need an account? Create an account <a href="create.html">here</a>.</p>
+	<div id="main">
+    <h1>The Final Countdown</h1><br/>
+    <div id="NAV" class="centered">
+      <div>
+  			<h2 id="NAV_title">Log in</h2>
+  			<table>
+  				<tr>
+  					<td><label name="username" for="username">Username:</label></td>
+  					<td><input type="text" id="username"></td>
+  				</tr>
+  				<tr>
+  					<td><label name="password" for="password">Password:</label></td>
+  					<td><input type="password" id="password"></td>
+  				</tr>
+  			</table>
+  			<button id="login_button" class="button button1">Log in</button>
+  			<div id="result">&nbsp;</div>
+  		</div>
+      <p><span id="login_nav_text">Need an account? Create an account </span><a id="swap_nav" class="create_nav">here</a>.</p>
+    </div>
 	</div>
 </div>
 
 <div>
-	<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; SIGN IN</span>
+	<span style="font-size:30px;cursor:pointer" onclick="openNav()"> &nbsp; &nbsp; &#9776; <span id="SIGNIN" >SIGN IN<span></span>
 </div>
+
+
+<!-- ********************************************************* -->
+
+
+
 <div class="home">
-  temporary div for some welcome info
+  <h2>Pomodoro Technique</h2> by By Robert Sheldon & Ivy Wigmore
+<br/><br/>
+<table><tr><td>
+<p>
+  The Pomodoro Technique is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. Longer breaks, typically 15 to 30 minutes, are taken after four consecutive work intervals. Each work interval is called a pomodoro, the Italian word for tomato (plural: pomodori).
+</p><br><p>
+  Developer and entrepreneur Francesco Cirillo created the Pomodoro Technique in the late 1980s, when he was a university student and used a tomato-shaped kitchen timer to organize his study schedule. At first, he experimented with different work intervals, starting with two minutes and extending them up to one hour; he quickly realized that these were getting too long to stay focused on a task. He settled on 25-minute pomodori as the optimal time for his needs.
+</p><br><p>
+  From this experience, Cirillo recognized that time could be turned into an ally, rather than a source of anxiety. The Pomodoro Technique essentially trains people to focus on tasks better by limiting the length of time they attempt to maintain that focus and ensuring restorative breaks from the effort. The method also helps them overcome their tendencies to procrastinate or multitask, both of which are known to impair productivity.
+  </p>
+</td></tr><tr>
+<td><br/><img src="https://www.plerdy.com/wp-content/uploads/2022/02/imgonline-com-ua-Resize-zteu1b8P3yOUL8G.jpg" width="600">
+</td></tr></table>
+
 </div>
-<div class="home">
+
+
+<!-- ********************************************************* -->
+
+
+<div id="timer" class="home">
   <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
   <span id="display_hours"></span>
   <span>:</span>
@@ -67,15 +85,27 @@ input.timer_input {
   <button id="timer_pause">Pause</button>
   <button id="timer_stop">Stop</button>
   <button id="timer_finish">Finish</button>
+  <span id="timer_error"></span>
 </div>
 
-<div class="container">
+
+<!-- ********************************************************* -->
+
+
+
+<div class="home">
   <div id="newtask">
       <input type="text" placeholder="Add Tasks">
       <button id="push">Add</button>
   </div>
   <div id="tasks"></div>
 </div>
+
+
+
+<!-- ********************************************************* -->
+
+
 
 <div class="home">
 	temporary div for user tasks
@@ -84,21 +114,23 @@ input.timer_input {
   temporary div for a music player
 </div>
 
+
+
+<!-- ********************************************************* -->
+
+
 <script src="login.js"></script>
+<script src="swap_nav.js"></script>
 <script src="timer.js"></script>
-<script src="task.js"></script>
+<script src="tasks.js"></script>
 
 <script>
 function openNav() {
   document.getElementById("mySidenav").style.width = "450px";
-  document.getElementById("main").style.marginLeft = "450px";
-  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
 
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
-  document.getElementById("main").style.marginLeft= "0";
-  document.body.style.backgroundColor = "white";
 }
 </script>
 
