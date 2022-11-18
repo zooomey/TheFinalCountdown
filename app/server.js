@@ -2,11 +2,14 @@ let express = require("express");
 let { Pool } = require("pg");
 let bcrypt = require("bcrypt");
 let env = require("../env.json");
+let cookieParser = require("cookie-parser");
+//let crypto = require('crypto');
 
 let hostname = "localhost";
 let port = 3000;
 let app = express();
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
 
@@ -16,6 +19,52 @@ pool.connect().then(() => {
 });
 
 let saltRounds = 10;
+let sessionCookies = []; //hold cookies
+
+
+// set a cookie
+
+app.get('/', function (req, res) {
+  res.cookie('name', 'express').end('cookie set');
+  console.log('Cookies: ', req.cookies);
+
+
+//random test stuff that doesn't work:
+
+  //console.log(document.cookie); <=== for testing in browser console
+/*
+  res.cookie('token', jwt.token, {
+  expires  : new Date(Date.now() + 9999999),
+  httpOnly : false
+});
+res.status(200).send({ user, token: jwt.token });
+
+    let user_token = req.cookies['house_user']; // always empty
+
+    if (user_token) {
+        // if the token exists, great!
+    } else {
+        crypto.randomBytes(24, function(err, buffer) {
+            let token = buffer.toString('hex');
+            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+            res.cookie('cookiecookie', token, {maxAge: 900000, httpOnly: true});
+            res.send(token);
+        });
+    }
+});
+
+  res.cookie('name', 'tobi', {
+    domain: '.example.com',
+    path: '/admin',
+    secure: true
+  });
+  res.cookie('rememberme', '1', {
+    expires: new Date(Date.now() + 900000),
+    httpOnly: true
+  });
+*/
+
+});
 
 app.post("/signup", (req, res) => {
 
@@ -92,7 +141,16 @@ app.post("/signin", (req, res) => {
                           username,
                         ])
                           .then((result) => {
-                            res.status(200).json({"username": result.rows[0].username, status: 200});
+                            //generate session cookie
+                            /*
+                            var cookieID = math.random(1000);
+                            sessionCookies[cookieID].push([username, cookieID, date]);
+                            bcrypt
+                              .hash(cookieID, saltRounds)
+                              .then((hashedCookie) => {
+                                  res.status(200).setCookie({sessionID: {userID: userID, username: username, cookie: hashedCookie}, status: 200});
+                                }*/
+                                res.status(200).json({"username": result.rows[0].username, status: 200});
                           });
                       } else {
                           res.status(401).send();
