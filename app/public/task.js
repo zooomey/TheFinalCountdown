@@ -23,6 +23,32 @@ button.addEventListener("click", () => {
 
         //deleting tasks
 
+        fetch("/add_task", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+                userid : username,// get username
+                taskname : document.querySelector('#newtask input').value,
+                description : "test", // do we need descriptions?
+                total : 0,
+			})
+		}).then((response) => response.json())
+			.then((data) => {
+				if (data.status === 200) {
+                    console.log("Task addition successful.");
+				} else {
+                    console.log("Task addition failed");
+				}
+			}).catch(error => {
+				console.log(error);
+			});
+
+        //TODO: get rid of innerHTML
+
+        //deleting tasks
+
         var current_tasks = document.querySelectorAll(".delete");
         for(var i=0; i<current_tasks.length; i++){
             current_tasks[i].onclick = function(){
