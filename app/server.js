@@ -3,7 +3,6 @@ let { Pool } = require("pg");
 let bcrypt = require("bcrypt");
 let env = require("../env.json");
 let cookieParser = require("cookie-parser");
-//let crypto = require('crypto');
 
 let hostname = "localhost";
 let port = 3000;
@@ -22,47 +21,9 @@ let saltRounds = 10;
 let sessionCookies = []; //hold cookies
 
 
-// set a cookie
-
 app.get('/', function (req, res) {
-  res.cookie('name', 'express').end('cookie set');
-  console.log('Cookies: ', req.cookies);
-
-
-//random test stuff that doesn't work:
-
-  //console.log(document.cookie); <=== for testing in browser console
-/*
-  res.cookie('token', jwt.token, {
-  expires  : new Date(Date.now() + 9999999),
-  httpOnly : false
-});
-res.status(200).send({ user, token: jwt.token });
-
-    let user_token = req.cookies['house_user']; // always empty
-
-    if (user_token) {
-        // if the token exists, great!
-    } else {
-        crypto.randomBytes(24, function(err, buffer) {
-            let token = buffer.toString('hex');
-            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-            res.cookie('cookiecookie', token, {maxAge: 900000, httpOnly: true});
-            res.send(token);
-        });
-    }
-});
-
-  res.cookie('name', 'tobi', {
-    domain: '.example.com',
-    path: '/admin',
-    secure: true
-  });
-  res.cookie('rememberme', '1', {
-    expires: new Date(Date.now() + 900000),
-    httpOnly: true
-  });
-*/
+  //console.log('Cookies: ', req.cookies);
+  //could add function here to unhash and validate cookie before every request
 
 });
 
@@ -236,6 +197,8 @@ app.post("/update_session", (req, res) => {
   let sessionid = req.body.sessionid;
   let seconds = req.body.seconds;
   let date = req.body.date;
+    
+  console.log('Cookies: ', req.cookies);
 
   if(sessionid && seconds && date) {
     pool.query("UPDATE sessions SET seconds = $1, stop_date = to_timestamp($2) WHERE sessionid = $3", [seconds, date, sessionid]).then((result) => {
