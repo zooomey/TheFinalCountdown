@@ -51,6 +51,7 @@ startButton.addEventListener("click", () => {
     let minutes = Number.isNaN(Number.parseInt(minuteInput.value)) ? 0 : Number.parseInt(minuteInput.value);
     let seconds = Number.isNaN(Number.parseInt(secondInput.value)) ? 0 : Number.parseInt(secondInput.value);
     timeLimit = hours * 3600 + minutes * 60 + seconds;
+    document.cookie = `time=${timeLimit}`;
 
     if (timeLimit != 0) {
         fetch("/add_session", {
@@ -150,6 +151,7 @@ startButton.addEventListener("click", () => {
 
 pauseButton.addEventListener("click", () => {
     if (isPaused) {
+        document.cookie = "test=true";
         fetch("/update_session", {
             method: "POST",
             headers: {
@@ -178,6 +180,7 @@ pauseButton.addEventListener("click", () => {
 });
 
 stopButton.addEventListener("click", () => {
+    console.log(document.cookie);
     fetch("/update_session", {
         method: "POST",
         headers: {
