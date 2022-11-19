@@ -129,6 +129,61 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
+
+// https://web.dev/drag-and-drop/
+document.addEventListener('DOMContentLoaded', (event) => {
+
+  function handleDragStart(event) {
+    this.style.opacity = '0.5';
+	
+	dragSrcEl = this;
+	
+	event.dataTransfer.effectAllowed = 'move';
+	event.dataTransfer.setData('text/html', this.innerHTML); // TODO: REPLACE INNERHTML
+  }
+
+  function handleDragEnd() {
+    this.style.opacity = '1.0';
+
+    items.forEach(function (item) {
+		item.classList.remove('over');
+    });
+  }
+
+  function handleDragOver(event) {
+	event.preventDefault();
+    return false;
+  }
+
+  function handleDragEnter() {
+    this.classList.add('over');
+  }
+
+  function handleDragLeave() {
+    this.classList.remove('over');
+  }
+  
+  function handleDrop(event) {
+  event.stopPropagation();
+
+  if (dragSrcEl !== this) {
+    dragSrcEl.innerHTML = this.innerHTML; // TODO: REPLACE INNERHTML
+    this.innerHTML = event.dataTransfer.getData('text/html'); // TODO: REPLACE INNERHTML
+  }
+
+  return false;
+  }
+
+  let items = document.querySelectorAll('.container .home'); // TODO: drag only kanban items
+  items.forEach(function(item) {
+    item.addEventListener('dragstart', handleDragStart);
+    item.addEventListener('dragover', handleDragOver);
+    item.addEventListener('dragenter', handleDragEnter);
+    item.addEventListener('dragleave', handleDragLeave);
+    item.addEventListener('dragend', handleDragEnd);
+    item.addEventListener('drop', handleDrop);
+  });
+});
 </script>
 
 </body>
