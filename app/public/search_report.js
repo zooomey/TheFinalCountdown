@@ -1,4 +1,3 @@
-<script>
 
 //let userID = document.getElementById("userID");
 let button = document.getElementById("generate");
@@ -112,5 +111,3 @@ button.addEventListener("click", () => {
 					console.log(error); //fetch crashed*/
 			});
 });
-
-</script>
