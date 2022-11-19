@@ -18,11 +18,10 @@ pool.connect().then(() => {
 });
 
 let saltRounds = 10;
-let sessionCookies = []; //hold cookies
+let sessionCookies = [];
 
 
 app.post("/signup", (req, res) => {
-
     if (req.body.username && req.body.plaintextPassword){
       let username = req.body.username;
       let plaintextPassword = req.body.plaintextPassword;
@@ -35,8 +34,6 @@ app.post("/signup", (req, res) => {
                 "SELECT * FROM users WHERE username = $1", [username]
             )
                 .then((result) => {
-                    console.log("RESULT :", result.rows.length);
-
                     if (result.rows.length > 0){ //user already exists
                         console.log(username, "this user name is taken");
                         res.status(200).send();
@@ -49,24 +46,21 @@ app.post("/signup", (req, res) => {
                                     "INSERT INTO users (username, hashed_password) VALUES ($1, $2)",
                                     [username, hashedPassword]
                                 )
-                                .then(() => {
-                                    // account created
+                                .then(() => {  // account created
                                     console.log(username, "account created");
                                     res.status(200).send();
                                 })
-                                .catch((error) => {
-                                    // insert failed
+                                .catch((error) => {  // insert failed
                                     console.log(error);
                                     res.status(500).send();
                                 });
                             })
-                    .catch((error) => {
-                        // insert failed
-                        console.log(error);
-                        res.status(500).send();
-                    });
-                }
-              });
+                            .catch((error) => {  // select failed
+                                console.log(error);
+                                res.status(500).send();
+                              });
+                        }
+                });
             }
             else{ res.status(401).send(); }}
         else{ res.status(401).send(); }}
@@ -85,8 +79,7 @@ app.post("/signin", (req, res) => {
         username,
     ])
         .then((result) => {
-            if (result.rows.length === 0) {
-                // username doesn't exist
+            if (result.rows.length === 0) { // username doesn't exist
                 return res.status(401).json({status: 401});
             }
             else{ // check pw
@@ -98,9 +91,7 @@ app.post("/signin", (req, res) => {
                         pool.query("SELECT * FROM users WHERE username = $1", [
                           username,
                         ])
-                          .then((result) => {
-                                console.log("oldcookie: ", oldCookie);
-                                //generate session cookie, save in array, hash the cookie, send to browser
+                          .then((result) => { //generate session cookie, save in array, hash the cookie, send to browser
                                 var num = Math.random(1000);
                                 newCookie = num.toString();
                                 userID = result.rows[0].id;
@@ -118,28 +109,31 @@ app.post("/signin", (req, res) => {
                                         cookie = JSON.parse(cookie);
                                         res.status(200).json({userID: userID, username: username, cookie: cookie.cookie, status: 200});
                                       }
-                                  }).catch((error) => {
-                                      // bcrypt crashed
+                                  }).catch((error) => { // bcrypt crashed
                                       console.log(error);
                                     });
                             });
                         }
-                        else {
-                          //wrong pw
+                        else { //wrong pw
                           res.status(401).send();
                         }
-                  }).catch((error) => {
-                      // bcrypt crashed
+                  }).catch((error) => { // bcrypt crashed
                       console.log(error);
                       res.status(500).send();
                   });
             }
         })
-        .catch((error) => {
-            // select crashed
+        .catch((error) => { // select crashed
             console.log(error);
             res.status(500).send();
         });
+});
+
+app.post("/signout", (req, res) => {
+  let userid = req.body.userid;
+  let cookie = req.body.cookie;
+
+  sessionCookies[userid] = ""; // delete cookie  
 });
 
 
@@ -170,6 +164,7 @@ CREATE TABLE tasks (
   else{ res.status(400).send(); }}
 );
 
+
 app.post("/add_session", (req, res) => {
 /*
 New session is created when the start button is clicked
@@ -188,7 +183,7 @@ CREATE TABLE sessions (
   let taskid = req.body.taskid;
   let date = req.body.date;
 
-  console.log('Cookies: ', req.cookies);
+  //console.log('Cookies: ', req.cookies);
 
   if (userid && taskid && date) {
     pool.query('INSERT INTO sessions (userID, taskID, seconds, start_date, stop_date) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($5)) RETURNING sessionid', [userid, taskid, 0, date, date]).then(result => {
