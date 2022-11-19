@@ -1,10 +1,20 @@
-
-//let userID = document.getElementById("userID");
+let userID = document.getElementById("userid");
 let button = document.getElementById("generate");
 let test = document.getElementById("test");
+let id;
+
+if (document.cookie){
+	var cookie = document.cookie;
+	var name = cookie.replace('session=', '');
+	cookie = JSON.parse(name);
+	name = cookie.username;
+	id = cookie.id;
+
+	userID.textContent = name; // change header
+}
 
 button.addEventListener("click", () => {
-		var data = {"userid": 2}; //TEMPORARY TEST!!!!
+		var data = {"userid": id};
 
 		button.remove();
 
