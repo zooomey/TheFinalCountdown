@@ -73,19 +73,19 @@ body {
 
 
 <div id="timer" class="home">
-  <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
-  <span id="display_hours"></span>
-  <span>:</span>
-  <input type="text" class="timer_input" id="input_minutes" placeholder="m" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
-  <span id="display_minutes"></span>
-  <span>:</span>
-  <input type="text" class="timer_input" id="input_seconds" placeholder="s" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
-  <span id="display_seconds"></span>
-  <button id="timer_start">Start</button>
-  <button id="timer_pause">Pause</button>
-  <button id="timer_stop">Stop</button>
-  <button id="timer_finish">Finish</button>
-  <span id="timer_error"></span>
+	<input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+	<span id="display_hours"></span>
+	<span>:</span>
+	<input type="text" class="timer_input" id="input_minutes" placeholder="m" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+	<span id="display_minutes"></span>
+	<span>:</span>
+	<input type="text" class="timer_input" id="input_seconds" placeholder="s" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+	<span id="display_seconds"></span>
+	<button id="timer_start">Start</button>
+	<button id="timer_pause">Pause</button>
+	<button id="timer_stop">Stop</button>
+	<button id="timer_finish">Finish</button>
+	<span id="timer_error"></span>
 </div>
 
 
@@ -93,12 +93,11 @@ body {
 
 
 
-<div class="home">
-  <div id="newtask">
-      <input type="text" placeholder="Add Tasks">
-      <button id="push">Add</button>
-  </div>
-  <div id="tasks"></div>
+<div class="home" class="task-container" id="newtask" draggable="true">
+	<input type="text" placeholder="Add Tasks">
+	<button id="push">Add</button>
+	<div id="tasks"></div>
+	</div>
 </div>
 
 
@@ -106,14 +105,15 @@ body {
 <!-- ********************************************************* -->
 
 
-// TODO: Replace iframe
+
 <div id="playlist" class="home" draggable="true">
+	<!-- TODO: Replace iframe -->
 	<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/64rWSKJM87x39duTwqeEwo?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 </div>
 
 
-
 <!-- ********************************************************* -->
+
 
 
 <script src="login.js"></script>
