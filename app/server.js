@@ -21,12 +21,6 @@ let saltRounds = 10;
 let sessionCookies = []; //hold cookies
 
 
-app.get('/', function (req, res) {
-  //console.log('Cookies: ', req.cookies);
-  //could add function here to unhash and validate cookie before every request
-
-});
-
 app.post("/signup", (req, res) => {
 
     if (req.body.username && req.body.plaintextPassword){
@@ -83,6 +77,9 @@ app.post("/signup", (req, res) => {
 app.post("/signin", (req, res) => {
     let username = req.body.username;
     let plaintextPassword = req.body.plaintextPassword;
+    let oldCookie = req.body.cookie;
+    let userID;
+    let newCookie;
 
     pool.query("SELECT hashed_password FROM users WHERE username = $1", [
         username,
@@ -102,22 +99,36 @@ app.post("/signin", (req, res) => {
                           username,
                         ])
                           .then((result) => {
-                            //generate session cookie
-                            /*
-                            var cookieID = math.random(1000);
-                            sessionCookies[cookieID].push([username, cookieID, date]);
-                            bcrypt
-                              .hash(cookieID, saltRounds)
-                              .then((hashedCookie) => {
-                                  res.status(200).setCookie({sessionID: {userID: userID, username: username, cookie: hashedCookie}, status: 200});
-                                }*/
-                                res.status(200).json({"username": result.rows[0].username, status: 200});
-                          });
-                      } else {
+                                console.log("oldcookie: ", oldCookie);
+                                //generate session cookie, save in array, hash the cookie, send to browser
+                                var num = Math.random(1000);
+                                newCookie = num.toString();
+                                userID = result.rows[0].id;
+                                username = result.rows[0].username;
+
+                                bcrypt
+                                  .hash(newCookie, saltRounds)
+                                  .then((hashedCookie) => {
+                                      if (oldCookie === ''){
+                                        sessionCookies[userID] = {username: username, cookie: newCookie};
+                                        res.status(200).json({userID: userID, username: username, cookie: hashedCookie, status: 200})
+                                      }
+                                      else{
+                                        var cookie = oldCookie.replace('session=', ''); //remove cookie name (most browsers need a name)
+                                        cookie = JSON.parse(cookie);
+                                        res.status(200).json({userID: userID, username: username, cookie: cookie.cookie, status: 200});
+                                      }
+                                  }).catch((error) => {
+                                      // bcrypt crashed
+                                      console.log(error);
+                                    });
+                            });
+                        }
+                        else {
+                          //wrong pw
                           res.status(401).send();
-                      }
-                  })
-                  .catch((error) => {
+                        }
+                  }).catch((error) => {
                       // bcrypt crashed
                       console.log(error);
                       res.status(500).send();
@@ -177,6 +188,8 @@ CREATE TABLE sessions (
   let taskid = req.body.taskid;
   let date = req.body.date;
 
+  console.log('Cookies: ', req.cookies);
+
   if (userid && taskid && date) {
     pool.query('INSERT INTO sessions (userID, taskID, seconds, start_date, stop_date) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($5)) RETURNING sessionid', [userid, taskid, 0, date, date]).then(result => {
       res.json({sessionID: result.rows[0].sessionid});
@@ -197,8 +210,6 @@ app.post("/update_session", (req, res) => {
   let sessionid = req.body.sessionid;
   let seconds = req.body.seconds;
   let date = req.body.date;
-    
-  console.log('Cookies: ', req.cookies);
 
   if(sessionid && seconds && date) {
     pool.query("UPDATE sessions SET seconds = $1, stop_date = to_timestamp($2) WHERE sessionid = $3", [seconds, date, sessionid]).then((result) => {
