@@ -3,12 +3,30 @@ let passwordInput = document.getElementById("password");
 let result = document.getElementById("result");
 let login = document.getElementById("login_button");
 let nav = document.getElementById("SIGNIN");
+let signout = document.getElementById("SIGNOUT");
 let create = document.getElementById("create");
 let swap_nav = document.getElementById("swap_nav");
 let login_nav_text = document.getElementById("login_nav_text");
 
-login.addEventListener("click", () => {
 
+if (document.cookie){ // stay signed in
+	var cookie = document.cookie;
+	var name = cookie.replace('session=', '');
+	cookie = JSON.parse(name);
+	name = cookie.username;
+
+	nav.textContent = "Welcome to The Final Countdown " + name + "!"; // change header
+	nav.removeAttribute('onclick');
+
+	var l = document.createElement('a');
+	signout.appendChild(l);
+	l.setAttribute('href', ''); // <======= load sign out / goodbye page & delete cookie
+	l.setAttribute('style', 'font-size: 15px');
+	l.textContent = " (SIGN OUT) ";
+}
+
+
+login.addEventListener("click", () => {
 	if(swap_nav.className === "create_nav")
 	{
 		fetch("/signin", {
@@ -27,13 +45,25 @@ login.addEventListener("click", () => {
 					var username = data.username;
 					var cookie = JSON.stringify({id: data.userID, username: username, cookie: data.cookie});
 
-					// can make this cookie less obvious / more secure later
-					document.cookie = `session=${cookie}`;
+					document.cookie = `session=${cookie}`; // <====== can make this cookie less obvious / more secure later
 
 					result.textContent = "Login successful. Welcome " + username + "!";
 					nav.textContent = "Welcome to The Final Countdown " + username + "!";
+					nav.removeAttribute('onclick');
+
+					var dash = document.createElement('a');
+					nav.appendChild(dash);
+					dash.setAttribute('href', ''); // <======= load user dashboard / kanban
+
 					result.classList.remove("error");
 					console.log("Login successful. Welcome ", data.username);
+
+					var l = document.createElement('a');
+					signout.appendChild(l);
+					l.setAttribute('href', ''); // <======= load sign out / goodbye page & delete cookie
+					l.setAttribute('style', 'font-size: 15px');
+					l.textContent = " (SIGN OUT) ";
+
 				} else {
 					result.textContent = "Login failed";
 					result.classList.add("error");
@@ -66,4 +96,13 @@ login.addEventListener("click", () => {
 		});
 	}
 
+});
+
+
+signout.addEventListener("click", () => {
+	console.log("SIGNING OUT");
+	document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; //delete cookie
+
+	nav.textContent = "SIGN IN";
+	signout.textContent = "";
 });
