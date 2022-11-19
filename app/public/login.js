@@ -19,11 +19,17 @@ login.addEventListener("click", () => {
 			body: JSON.stringify({
 				username: usernameInput.value,
 				plaintextPassword: passwordInput.value,
+				cookie: document.cookie
 			})
 		}).then((response) => response.json())
 			.then((data) => {
 				if (data.status === 200) {
 					var username = data.username;
+					var cookie = JSON.stringify({id: data.userID, username: username, cookie: data.cookie});
+
+					// can make this cookie less obvious / more secure later
+					document.cookie = `session=${cookie}`;
+
 					result.textContent = "Login successful. Welcome " + username + "!";
 					nav.textContent = "Welcome to The Final Countdown " + username + "!";
 					result.classList.remove("error");
