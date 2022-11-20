@@ -2,9 +2,14 @@
 	font-family: powerdark;
 	src: url('powerdark.ttf');
 }
+#playlist{
+	padding: 0px;
+}
 body {
 	font-size: 15px;
 	font-family: sans-serif;
+    height: 100vh;
+    background: #066acd;
 }
 a:hover {
 	color: red;
@@ -113,10 +118,6 @@ input[type=number] {
     margin: 0;
     box-sizing: border-box;
 }
-body{
-    height: 100vh;
-    background: #066acd;
-}
 
 #newtask{
     position: relative;
@@ -168,7 +169,7 @@ body{
     align-items: center;
     justify-content: space-between;
     border: 1px solid #939697;
-    cursor: pointer;
+    cursor: move;
     background-color: #c5e1e6;
     height: 50px;
     margin-bottom: 8px;
@@ -189,6 +190,30 @@ body{
     height: 100%;
     width: 40px;
     border-radius: 5px;
+}
+#todo{
+	border: 5px solid black;
+    width: 100%;
+    position: relative;
+    background-color: #ffffff;
+    padding: 5px 20px;
+    margin-top: 10px;
+}
+#inprogress{
+	border: 5px solid black;
+    width: 100%;
+    position: relative;
+    background-color: #ffffff;
+    padding: 5px 20px;
+    margin-top: 10px;
+}
+#done{
+	border: 5px solid black;
+    width: 100%;
+    position: relative;
+    background-color: #ffffff;
+    padding: 5px 20px;
+    margin-top: 10px;
 }
 input.timer_input {
 	width: 1.5em;

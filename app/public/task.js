@@ -1,6 +1,7 @@
 //  source: https://www.educative.io/answers/how-to-create-a-simple-to-do-list-with-html-css-and-js
 let button = document.getElementById("push");
 let tasks = document.getElementById("tasks")
+let todo = document.getElementById("todo")
 
 button.addEventListener("click", () => {
     if(document.querySelector('#newtask input').value.length == 0){
@@ -8,8 +9,8 @@ button.addEventListener("click", () => {
     }
 
     else{
-        document.querySelector('#tasks').innerHTML += `
-            <div class="task">
+        document.querySelector('#todo').innerHTML += `
+            <div class="task" draggable="true">
                 <span id="taskname">
                     ${document.querySelector('#newtask input').value}
                 </span>
