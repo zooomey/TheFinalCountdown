@@ -144,6 +144,7 @@ CREATE TABLE tasks (
     userID NUMERIC,
     taskname VARCHAR(40),
     description VARCHAR,
+    estimate NUMERIC
     total NUMERIC,
     completed BOOLEAN,
     abandoned BOOLEAN
@@ -151,11 +152,12 @@ CREATE TABLE tasks (
   let userid = req.body.userid;
   let taskname = req.body.taskname;
   let description = req.body.description;
+  let estimate = req.body.estimate;
   
   //checkCookie(cookie, userid);
 
   if (taskname.length < 40 && taskname.length >= 1){
-      pool.query('INSERT INTO tasks (userID, taskname, description, total, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6)', [userid, taskname, description, 0, false, false]);
+      pool.query('INSERT INTO tasks (userID, taskname, description, estimate, total, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6, $7)', [userid, taskname, description, estimate, 0, false, false]);
       res.status(200).send();
   }
   else{ res.status(400).send(); }}
