@@ -133,7 +133,7 @@ app.post("/signout", (req, res) => {
   let userid = req.body.userid;
   let cookie = req.body.cookie;
 
-  sessionCookies[userid] = ""; // delete cookie  
+  sessionCookies[userid] = ""; // delete cookie
 });
 
 
@@ -151,6 +151,8 @@ CREATE TABLE tasks (
   let userid = req.body.userid;
   let taskname = req.body.taskname;
   let description = req.body.description;
+  
+  //checkCookie(cookie, userid);
 
   if (taskname.length < 40 && taskname.length >= 1){
       pool.query('INSERT INTO tasks (userID, taskname, description, total, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6)', [userid, taskname, description, 0, false, false]);
@@ -218,8 +220,9 @@ CREATE TABLE sessions (
   let userid = req.body.userid;
   let taskid = req.body.taskid;
   let date = req.body.date;
+  let cookie = req.body.cookie;
 
-  //console.log('Cookies: ', req.cookies);
+  //checkCookie(cookie, userid);
 
   if (userid && taskid && date) {
     pool.query('INSERT INTO sessions (userID, taskID, seconds, start_date, stop_date) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($4)) RETURNING sessionid', [userid, taskid, 0, date]).then(result => {
@@ -241,6 +244,9 @@ app.post("/update_session", (req, res) => {
   let sessionid = req.body.sessionid;
   let seconds = req.body.seconds;
   let date = req.body.date;
+  let cookie = req.body.cookie;
+
+  //checkCookie(cookie, userid);
 
   if(sessionid && seconds && date) {
     pool.query("UPDATE sessions SET seconds = $1, stop_date = to_timestamp($2) WHERE sessionid = $3", [seconds, date, sessionid]).then((result) => {
@@ -290,6 +296,36 @@ app.post("/search/sessions", (req, res) => {
     });
   }
 });
+
+
+function checkCookie(cookie, id){
+  if (cookie === ''){
+    return false;
+  }
+  else if (cookie){
+    var hashedCookie = cookie.replace('session=', ''); //remove cookie name (most browsers need a name)
+    hashedCookie = JSON.parse(hashedCookie);
+    if (hashedCookie.cookie) {
+      let plaintext = sessionCookies[id].cookie;
+
+      //console.log("plain: ", plaintext);
+      //console.log("hash: ", hashedCookie.cookie);
+
+      bcrypt
+          .compare(plaintext, hashedCookie.cookie)
+          .then((cookiesMatched) => {
+              if (cookiesMatched) {
+                return true;
+              }
+              else {
+                return false;
+              }
+      });
+    }
+    else {return false}; // invalid cookie
+  }
+  else {return false}; // no cookie
+}
 
 
 app.listen(port, hostname, () => {
