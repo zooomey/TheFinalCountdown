@@ -146,6 +146,7 @@ CREATE TABLE tasks (
   let userid = req.body.userid;
   let taskname = req.body.taskname;
   let description = req.body.description;
+  let estimate = req.body.estimate;
   let total = 0;
   let completed = false;
   let abandoned = false;

@@ -1,6 +1,6 @@
 //  source: https://www.educative.io/answers/how-to-create-a-simple-to-do-list-with-html-css-and-js
 let button = document.getElementById("push");
-let tasks = document.getElementById("tasks")
+let tasks = document.getElementById("tasks");
 
 button.addEventListener("click", () => {
     if(document.querySelector('#newtask input').value.length == 0){
@@ -13,14 +13,16 @@ button.addEventListener("click", () => {
                 <span id="taskname">
                     ${document.querySelector('#newtask input').value}
                 </span>
-                <button class="delete">
+                <span id="estimate">
+                    ${document.querySelector('#newtask select').value}
+                </span>
+                <button class="delete" id="deletebutton">
                     <i class="far fa-trash-alt"></i>
                 </button>
             </div>
         `;
 
         //TODO: get rid of innerHTML
-
         //deleting tasks
 
         fetch("/add_task", {
@@ -33,6 +35,7 @@ button.addEventListener("click", () => {
                 taskname : document.querySelector('#newtask input').value,
                 description : "test", // do we need descriptions?
                 total : 0,
+                estimate: 0,
 			})
 		}).then((response) => response.json())
 			.then((data) => {
@@ -44,10 +47,6 @@ button.addEventListener("click", () => {
 			}).catch(error => {
 				console.log(error);
 			});
-
-        //TODO: get rid of innerHTML
-
-        //deleting tasks
 
         var current_tasks = document.querySelectorAll(".delete");
         for(var i=0; i<current_tasks.length; i++){
