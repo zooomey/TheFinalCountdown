@@ -196,3 +196,6 @@ input.timer_input {
 ::placeholder {
 	text-align: center;
 }
+#timer {
+  display: none;
+}

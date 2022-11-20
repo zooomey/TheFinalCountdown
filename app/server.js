@@ -141,8 +141,8 @@ app.post("/add_task", (req, res) => {
 /*
 CREATE TABLE tasks (
     taskID SERIAL PRIMARY KEY,
-    userID VARCHAR(25),
-    taskname VARCHAR(25),
+    userID NUMERIC,
+    taskname VARCHAR(40),
     description VARCHAR,
     total NUMERIC,
     completed BOOLEAN,
@@ -151,18 +151,54 @@ CREATE TABLE tasks (
   let userid = req.body.userid;
   let taskname = req.body.taskname;
   let description = req.body.description;
-  let total = 0;
-  let completed = false;
-  let abandoned = false;
 
-  if (taskname && estimate && workhrs){
-    if (taskname.length <= 15 && taskname.length >= 1){
-        pool.query('INSERT INTO tasks (userID, taskname, description, total, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6)', [userid, taskname, description, total, completed, abandoned]);
-        res.status(200).send();
-    }
-    else{ res.status(400).send(); }}
+  if (taskname.length < 40 && taskname.length >= 1){
+      pool.query('INSERT INTO tasks (userID, taskname, description, total, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6)', [userid, taskname, description, 0, false, false]);
+      res.status(200).send();
+  }
   else{ res.status(400).send(); }}
 );
+
+
+app.post("/close_task", (req, res) => {
+  let taskID = req.body.taskID;
+  let status = req.body.status;
+
+  if (taskID && status === "completed") {
+    pool.query("UPDATE tasks SET completed = true WHERE taskid = $1", [taskID]).then((result) => {
+      res.send();
+    }).catch((error) => {
+      res.status(500).send();
+    });
+  } else if (taskID && status === "abandoned") {
+    pool.query("UPDATE tasks SET abandoned = true WHERE taskid = $1", [taskID]).then((result) => {
+      res.send();
+    }).catch((error) => {
+      res.status(500).send();
+    });
+  } else {
+    res.status(400).send();
+  }
+});
+
+
+app.post("/delete_task", (req, res) => {
+  let taskID = req.body.taskID;
+
+  if (taskID) {
+    pool.query("DELETE FROM sessions WHERE taskid = $1", [taskID]).then((result) => {
+      pool.query("DELETE FROM tasks WHERE taskid = $1", [taskID]).then((result) => {
+        res.send();
+      }).catch((error) => {
+        res.status(500).send();
+      });
+    }).catch((error) => {
+      res.status(500).send();
+    });
+  } else {
+    res.status(400).send();
+  }
+});
 
 
 app.post("/add_session", (req, res) => {
@@ -186,7 +222,7 @@ CREATE TABLE sessions (
   //console.log('Cookies: ', req.cookies);
 
   if (userid && taskid && date) {
-    pool.query('INSERT INTO sessions (userID, taskID, seconds, start_date, stop_date) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($5)) RETURNING sessionid', [userid, taskid, 0, date, date]).then(result => {
+    pool.query('INSERT INTO sessions (userID, taskID, seconds, start_date, stop_date) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($4)) RETURNING sessionid', [userid, taskid, 0, date]).then(result => {
       res.json({sessionID: result.rows[0].sessionid});
     }).catch((error) => {
       res.status(500).send();

@@ -19,7 +19,7 @@ function restrictInput(input) {
 }
 
 function resetTimer() {
-    // Return page title to previous value here
+    document.title = "The Final Countdown";
     clearInterval(timerId);
     isPaused = false;
     hourInput.style.display = "inline";
@@ -43,6 +43,7 @@ stopButton.style.display = "none";
 finishButton.style.display = "none";
 
 startButton.addEventListener("click", () => {
+    console.log(taskID);
     restrictInput(hourInput);
     restrictInput(minuteInput);
     restrictInput(secondInput);
@@ -51,7 +52,6 @@ startButton.addEventListener("click", () => {
     let minutes = Number.isNaN(Number.parseInt(minuteInput.value)) ? 0 : Number.parseInt(minuteInput.value);
     let seconds = Number.isNaN(Number.parseInt(secondInput.value)) ? 0 : Number.parseInt(secondInput.value);
     timeLimit = hours * 3600 + minutes * 60 + seconds;
-    document.cookie = `time=${timeLimit}`;
 
     if (timeLimit != 0) {
         fetch("/add_session", {
@@ -60,11 +60,8 @@ startButton.addEventListener("click", () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                // Where are we getting userID from?
-                // taskID should come from task.js
-                // Placeholders
-                userid: 4,
-                taskid: 1,
+                userid: 2, // Placeholder
+                taskid: taskID,
                 date: Date.now() / 1000
             })
         }).then((response) => {
@@ -151,7 +148,6 @@ startButton.addEventListener("click", () => {
 
 pauseButton.addEventListener("click", () => {
     if (isPaused) {
-        document.cookie = "test=true";
         fetch("/update_session", {
             method: "POST",
             headers: {
@@ -180,7 +176,6 @@ pauseButton.addEventListener("click", () => {
 });
 
 stopButton.addEventListener("click", () => {
-    console.log(document.cookie);
     fetch("/update_session", {
         method: "POST",
         headers: {
@@ -222,7 +217,25 @@ finishButton.addEventListener("click", () => {
     }).then((response) => {
         if (response.status === 200) {
             resetTimer();
-            timerError.textContent = "";
+            fetch("/close_task", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    taskID: taskID,
+                    status: "completed"
+                })
+            }).then((response) => {
+                if (response.status === 200) {
+                    timerError.textContent = "";
+                    // Defined in task.js
+                    timer.style.display = "none";
+                    refreshTaskList();
+                } else {
+                    timerError.textContent = "Error connecting to server";
+                }
+            });
         } else {
             isPaused = true;
             pauseButton.textContent = "Resume";

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>The Final Countdown</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="main.css">
 <style>
@@ -73,6 +74,7 @@ body {
 
 
 <div id="timer" class="home">
+  <div id="timer_task_name"></div>
   <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
   <span id="display_hours"></span>
   <span>:</span>
@@ -95,7 +97,7 @@ body {
 
 <div class="home">
   <div id="newtask">
-      <input type="text" placeholder="Add Tasks">
+      <input id="taskinput" type="text" placeholder="Add Tasks">
       <button id="push">Add</button>
   </div>
   <div id="tasks"></div>
@@ -119,7 +121,7 @@ body {
 <script src="login.js"></script>
 <script src="swap_nav.js"></script>
 <script src="timer.js"></script>
-<script src="tasks.js"></script>
+<script src="task.js"></script>
 
 <script>
 function openNav() {
