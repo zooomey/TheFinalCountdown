@@ -23,7 +23,6 @@ function refreshTaskList() {
     }).then((response) => {
         if (response.status === 200) {
             response.json().then((body) => {
-                console.log(body.rows);
                 while (tasks.firstChild) {
                     tasks.firstChild.remove();
                 }
@@ -121,7 +120,6 @@ addButton.addEventListener("click", () => {
             if (response.status === 200) {
                 taskNameInput.value = "";
                 taskDescInput.value = "";
-                console.log("test");
                 refreshTaskList();
             } else {
                 // Error
