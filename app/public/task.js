@@ -1,36 +1,16 @@
-<<<<<<< HEAD
-//  source: https://www.educative.io/answers/how-to-create-a-simple-to-do-list-with-html-css-and-js
-let button = document.getElementById("push");
-let tasks = document.getElementById("tasks")
-let todo = document.getElementById("todo")
-=======
 let addButton = document.getElementById("push");
 let tasks = document.getElementById("tasks");
-let taskInput = document.getElementById("taskinput");
+let taskNameInput = document.getElementById("task_name");
+let taskDescInput = document.getElementById("task_desc");
 let timer = document.getElementById("timer");
 let timerTaskName = document.getElementById("timer_task_name");
->>>>>>> 901981b401fbed4ab436ffe57e3048eacd342f72
+let estimateInput = document.getElementById("estimate");
 
 // Placeholder
 let userID = 2;
 // For use in timer.js
 let taskID;
 
-<<<<<<< HEAD
-    else{
-        document.querySelector('#todo').innerHTML += `
-            <div class="task" draggable="true">
-                <span id="taskname">
-                    ${document.querySelector('#newtask input').value}
-                </span>
-                <button class="delete">
-                    <i class="far fa-trash-alt"></i>
-                </button>
-            </div>
-        `;
-
-        //TODO: get rid of innerHTML
-=======
 function refreshTaskList() {
     fetch("/search/tasks", {
         method: "POST",
@@ -116,14 +96,13 @@ function refreshTaskList() {
         }
     })
 }
->>>>>>> 901981b401fbed4ab436ffe57e3048eacd342f72
 
 refreshTaskList();
 
 addButton.addEventListener("click", () => {
-    if (taskInput.value.length === 0) {
+    if (taskNameInput.value.length === 0) {
         alert("Enter A Task Name!");
-    } else if (taskInput.value.length > 40) {
+    } else if (taskNameInput.value.length > 40) {
         alert("Enter A Shorter Task Name!");
     } else {
         fetch("/add_task", {
@@ -133,12 +112,14 @@ addButton.addEventListener("click", () => {
             },
             body: JSON.stringify({
                 userid: userID,
-                taskname: taskInput.value,
-                description: ""
+                taskname: taskNameInput.value,
+                description: taskDescInput.value,
+                estimate: estimateInput.value
             })
         }).then((response) => {
             if (response.status === 200) {
-                taskInput.value = "";
+                taskNameInput.value = "";
+                taskDescInput.value = "";
                 refreshTaskList();
             } else {
                 // Error

@@ -2,14 +2,16 @@
 	font-family: powerdark;
 	src: url('powerdark.ttf');
 }
-#playlist{
-	padding: 0px;
-}
 body {
 	font-size: 15px;
 	font-family: sans-serif;
-    height: 100vh;
-    background: #066acd;
+	height: 100vh;
+	background-color: lightgray;
+}
+div.home{
+  border: 10px solid black;
+  padding: 40px;
+  margin: 10px;
 }
 a:hover {
 	color: red;
@@ -169,7 +171,7 @@ input[type=number] {
     align-items: center;
     justify-content: space-between;
     border: 1px solid #939697;
-    cursor: move;
+    cursor: pointer;
     background-color: #c5e1e6;
     height: 50px;
     margin-bottom: 8px;
@@ -214,6 +216,9 @@ input[type=number] {
     background-color: #ffffff;
     padding: 5px 20px;
     margin-top: 10px;
+}
+#playlist{
+	padding: 0px;
 }
 input.timer_input {
 	width: 1.5em;
