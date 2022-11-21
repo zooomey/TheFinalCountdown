@@ -1,8 +1,10 @@
 let addButton = document.getElementById("push");
 let tasks = document.getElementById("tasks");
-let taskInput = document.getElementById("taskinput");
+let taskNameInput = document.getElementById("task_name");
+let taskDescInput = document.getElementById("task_desc");
 let timer = document.getElementById("timer");
 let timerTaskName = document.getElementById("timer_task_name");
+let estimateInput = document.getElementById("estimate");
 
 // Placeholder
 let userID = 2;
@@ -21,6 +23,7 @@ function refreshTaskList() {
     }).then((response) => {
         if (response.status === 200) {
             response.json().then((body) => {
+                console.log(body.rows);
                 while (tasks.firstChild) {
                     tasks.firstChild.remove();
                 }
@@ -98,9 +101,9 @@ function refreshTaskList() {
 refreshTaskList();
 
 addButton.addEventListener("click", () => {
-    if (taskInput.value.length === 0) {
+    if (taskNameInput.value.length === 0) {
         alert("Enter A Task Name!");
-    } else if (taskInput.value.length > 40) {
+    } else if (taskNameInput.value.length > 40) {
         alert("Enter A Shorter Task Name!");
     } else {
         fetch("/add_task", {
@@ -110,12 +113,15 @@ addButton.addEventListener("click", () => {
             },
             body: JSON.stringify({
                 userid: userID,
-                taskname: taskInput.value,
-                description: ""
+                taskname: taskNameInput.value,
+                description: taskDescInput.value,
+                estimate: estimateInput.value
             })
         }).then((response) => {
             if (response.status === 200) {
-                taskInput.value = "";
+                taskNameInput.value = "";
+                taskDescInput.value = "";
+                console.log("test");
                 refreshTaskList();
             } else {
                 // Error

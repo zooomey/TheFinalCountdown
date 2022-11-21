@@ -156,7 +156,7 @@ CREATE TABLE tasks (
   
   //checkCookie(cookie, userid);
 
-  if (taskname.length < 40 && taskname.length >= 1){
+  if (taskname.length < 40 && taskname.length >= 1 && description && estimate){
       pool.query('INSERT INTO tasks (userID, taskname, description, estimate, total, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6, $7)', [userid, taskname, description, estimate, 0, false, false]);
       res.status(200).send();
   }
