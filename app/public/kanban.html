@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Final Countdown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="main.css">
+<style>
+div.home{
+  border: 10px solid black;
+  padding: 40px;
+  margin: 10px;
+}
+body {
+  background-color: lightgray;
+}
+</style>
+</head>
+<body>
+
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<div id="main">
+    <h1>The Final Countdown</h1><br/>
+    <div id="NAV" class="centered">
+      <div>
+  			<h2 id="NAV_title">Log in</h2>
+  			<table>
+  				<tr>
+  					<td><label name="username" for="username">Username:</label></td>
+  					<td><input type="text" id="username"></td>
+  				</tr>
+  				<tr>
+  					<td><label name="password" for="password">Password:</label></td>
+  					<td><input type="password" id="password"></td>
+  				</tr>
+  			</table>
+  			<button id="login_button" class="button button1">Log in</button>
+  			<div id="result">&nbsp;</div>
+  		</div>
+      <p><span id="login_nav_text">Need an account? Create an account </span><a id="swap_nav" class="create_nav">here</a>.</p>
+    </div>
+	</div>
+</div>
+
+<div style="padding-top: 20px">
+	<span style="font-size:30px;cursor:pointer" onclick="openNav()"> &nbsp; &nbsp; &#9776; </span><span id="SIGNIN" style="font-size:30px;cursor:pointer" onclick="openNav()">SIGN IN</span> &nbsp; &nbsp; &nbsp; <span id="SIGNOUT"></span>
+</div>
+
+
+<!-- ********************************************************* -->
+
+
+
+<div class="home">
+  <h2>Pomodoro Technique</h2> by Robert Sheldon & Ivy Wigmore
+<br/><br/>
+<table><tr><td>
+<p>
+  The Pomodoro Technique is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. Longer breaks, typically 15 to 30 minutes, are taken after four consecutive work intervals. Each work interval is called a pomodoro, the Italian word for tomato (plural: pomodori).
+</p><br><p>
+  Developer and entrepreneur Francesco Cirillo created the Pomodoro Technique in the late 1980s, when he was a university student and used a tomato-shaped kitchen timer to organize his study schedule. At first, he experimented with different work intervals, starting with two minutes and extending them up to one hour; he quickly realized that these were getting too long to stay focused on a task. He settled on 25-minute pomodori as the optimal time for his needs.
+</p><br><p>
+  From this experience, Cirillo recognized that time could be turned into an ally, rather than a source of anxiety. The Pomodoro Technique essentially trains people to focus on tasks better by limiting the length of time they attempt to maintain that focus and ensuring restorative breaks from the effort. The method also helps them overcome their tendencies to procrastinate or multitask, both of which are known to impair productivity.
+  </p>
+</td></tr><tr>
+<td><br/><img src="https://www.plerdy.com/wp-content/uploads/2022/02/imgonline-com-ua-Resize-zteu1b8P3yOUL8G.jpg" width="600">
+</td></tr></table>
+
+</div>
+
+
+<!-- ********************************************************* -->
+
+
+<div id="timer" class="home">
+<<<<<<< HEAD
+	<input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+	<span id="display_hours"></span>
+	<span>:</span>
+	<input type="text" class="timer_input" id="input_minutes" placeholder="m" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+	<span id="display_minutes"></span>
+	<span>:</span>
+	<input type="text" class="timer_input" id="input_seconds" placeholder="s" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+	<span id="display_seconds"></span>
+	<button id="timer_start">Start</button>
+	<button id="timer_pause">Pause</button>
+	<button id="timer_stop">Stop</button>
+	<button id="timer_finish">Finish</button>
+	<span id="timer_error"></span>
+=======
+  <div id="timer_task_name"></div>
+  <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+  <span id="display_hours"></span>
+  <span>:</span>
+  <input type="text" class="timer_input" id="input_minutes" placeholder="m" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+  <span id="display_minutes"></span>
+  <span>:</span>
+  <input type="text" class="timer_input" id="input_seconds" placeholder="s" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+  <span id="display_seconds"></span>
+  <button id="timer_start">Start</button>
+  <button id="timer_pause">Pause</button>
+  <button id="timer_stop">Stop</button>
+  <button id="timer_finish">Finish</button>
+  <span id="timer_error"></span>
+>>>>>>> 901981b401fbed4ab436ffe57e3048eacd342f72
+</div>
+
+
+<!-- ********************************************************* -->
+
+
+
+<<<<<<< HEAD
+<div class="home" class="task-container" id="newtask">
+	<input type="text" placeholder="Add Tasks">
+	<button id="push">Add</button>
+	<div id="tasks">
+		<div id="todo"><h2>Todo</h2></div>
+		<div id="inprogress"><h2>In progress</h2></div>
+		<div id="done"><h2>Done</h2></div>
+	</div>
+=======
+<div class="home">
+  <div id="newtask">
+      <input id="taskinput" type="text" placeholder="Add Tasks">
+      <button id="push">Add</button>
+  </div>
+  <div id="tasks"></div>
+>>>>>>> 901981b401fbed4ab436ffe57e3048eacd342f72
+</div>
+
+
+
+<!-- ********************************************************* -->
+
+
+
+<div id="playlist" class="home">
+	<!-- TODO: Replace iframe -->
+	<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/64rWSKJM87x39duTwqeEwo?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+
+
+<!-- ********************************************************* -->
+
+
+
+<script src="login.js"></script>
+<script src="swap_nav.js"></script>
+<script src="timer.js"></script>
+<script src="task.js"></script>
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "450px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+// https://web.dev/drag-and-drop/
+document.addEventListener('DOMContentLoaded', (event) => {
+
+  function handleDragStart(event) {
+    this.style.opacity = '0.5';
+	
+	dragSrcEl = this;
+	
+	event.dataTransfer.effectAllowed = 'move';
+	event.dataTransfer.setData('text/html', this.innerHTML); // TODO: REPLACE INNERHTML
+  }
+
+  function handleDragEnd() {
+    this.style.opacity = '1.0';
+
+    items.forEach(function (item) {
+		item.classList.remove('over');
+    });
+  }
+
+  function handleDragOver(event) {
+	event.preventDefault();
+    return false;
+  }
+
+  function handleDragEnter() {
+    this.classList.add('over');
+  }
+
+  function handleDragLeave() {
+	this.classList.remove('over');
+  }
+  
+  function handleDrop(event) {
+	event.stopPropagation();
+
+	if (dragSrcEl !== this) {
+		dragSrcEl.innerHTML = this.innerHTML; // TODO: REPLACE INNERHTML
+		this.innerHTML = e.dataTransfer.getData('text/html'); // TODO: REPLACE INNERHTML
+	}
+
+	return false;
+  }
+  
+  const container = document.querySelector("#tasks");
+  let items = container.querySelectorAll(".task"); // TODO: drag only kanban items
+  items.forEach(function(item) {
+    item.addEventListener('dragstart', handleDragStart);
+    item.addEventListener('dragover', handleDragOver);
+    item.addEventListener('dragenter', handleDragEnter);
+    item.addEventListener('dragleave', handleDragLeave);
+    item.addEventListener('dragend', handleDragEnd);
+    item.addEventListener('drop', handleDrop);
+  });
+});
+</script>
+
+</body>
+</html>
