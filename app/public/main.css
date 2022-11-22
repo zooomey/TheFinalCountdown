@@ -229,3 +229,20 @@ input.timer_input {
 #timer {
   display: none;
 }
+
+.grid-square {
+	display: inline-block;
+	background-color: #fff;
+	border: solid 1px rgb(0,0,0,0.2);
+	padding: 10px;
+	margin: 12px;
+}
+
+.blue-background-class {
+	background-color: #C8EBFB;
+}
+
+.board {
+	padding-right: 0;
+	margin-right: 15px;
+}
