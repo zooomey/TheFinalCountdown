@@ -38,103 +38,96 @@
 </div>
 
 
+<div id="gridDiv" class="board">
 <!-- ********************************************************* -->
 
+      <div class="home" class="grid-square">
+        <h2>Pomodoro Technique</h2> by Robert Sheldon & Ivy Wigmore
+      <br/><br/>
+      <table><tr><td>
+      <p>
+        The Pomodoro Technique is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. Longer breaks, typically 15 to 30 minutes, are taken after four consecutive work intervals. Each work interval is called a pomodoro, the Italian word for tomato (plural: pomodori).
+      </p><br><p>
+        Developer and entrepreneur Francesco Cirillo created the Pomodoro Technique in the late 1980s, when he was a university student and used a tomato-shaped kitchen timer to organize his study schedule. At first, he experimented with different work intervals, starting with two minutes and extending them up to one hour; he quickly realized that these were getting too long to stay focused on a task. He settled on 25-minute pomodori as the optimal time for his needs.
+      </p><br><p>
+        From this experience, Cirillo recognized that time could be turned into an ally, rather than a source of anxiety. The Pomodoro Technique essentially trains people to focus on tasks better by limiting the length of time they attempt to maintain that focus and ensuring restorative breaks from the effort. The method also helps them overcome their tendencies to procrastinate or multitask, both of which are known to impair productivity.
+        </p>
+      </td></tr><tr>
+      <td><br/><img src="https://www.plerdy.com/wp-content/uploads/2022/02/imgonline-com-ua-Resize-zteu1b8P3yOUL8G.jpg" width="600">
+      </td></tr></table>
+
+      </div>
 
 
-<div class="home">
-  <h2>Pomodoro Technique</h2> by Robert Sheldon & Ivy Wigmore
-<br/><br/>
-<table><tr><td>
-<p>
-  The Pomodoro Technique is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. Longer breaks, typically 15 to 30 minutes, are taken after four consecutive work intervals. Each work interval is called a pomodoro, the Italian word for tomato (plural: pomodori).
-</p><br><p>
-  Developer and entrepreneur Francesco Cirillo created the Pomodoro Technique in the late 1980s, when he was a university student and used a tomato-shaped kitchen timer to organize his study schedule. At first, he experimented with different work intervals, starting with two minutes and extending them up to one hour; he quickly realized that these were getting too long to stay focused on a task. He settled on 25-minute pomodori as the optimal time for his needs.
-</p><br><p>
-  From this experience, Cirillo recognized that time could be turned into an ally, rather than a source of anxiety. The Pomodoro Technique essentially trains people to focus on tasks better by limiting the length of time they attempt to maintain that focus and ensuring restorative breaks from the effort. The method also helps them overcome their tendencies to procrastinate or multitask, both of which are known to impair productivity.
-  </p>
-</td></tr><tr>
-<td><br/><img src="https://www.plerdy.com/wp-content/uploads/2022/02/imgonline-com-ua-Resize-zteu1b8P3yOUL8G.jpg" width="600">
-</td></tr></table>
+      <!-- ********************************************************* -->
 
+
+      <div id="timer" class="home" class="grid-square">
+        <div id="timer_task_name"></div>
+        <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+        <span id="display_hours"></span>
+        <span>:</span>
+        <input type="text" class="timer_input" id="input_minutes" placeholder="m" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+        <span id="display_minutes"></span>
+        <span>:</span>
+        <input type="text" class="timer_input" id="input_seconds" placeholder="s" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+        <span id="display_seconds"></span>
+        <button id="timer_start">Start</button>
+        <button id="timer_pause">Pause</button>
+        <button id="timer_stop">Stop</button>
+        <button id="timer_finish">Finish</button>
+        <span id="timer_error"></span>
+      </div>
+
+
+      <!-- ********************************************************* -->
+
+
+      <div class="home" class="grid-square">
+        <p>Add your tasks here. Please add your tasks before hitting start.</p>
+        <div id="newtask">
+            <input id="task_name" type="text" placeholder="Task Name">
+            <input id="task_desc" type="text" placeholder="Task Description">
+            <br>
+            <label for="estimate">Time Estimate (Minutes):</label>
+
+            <select name="estimate" id="estimate">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="20">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+              <option value="60">60</option>
+              <option value="70">70</option>
+              <option value="80">80</option>
+              <option value="90">90</option>
+              <option value="100">100</option>
+            </select>
+
+            <button id="push">Add</button>
+        </div>
+      </div>
+
+
+      <!-- ********************************************************* -->
+
+
+      <div id="playlist" class="home" class="grid-square">
+      	<!-- TODO: Replace iframe -->
+      	<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/64rWSKJM87x39duTwqeEwo?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+
+
+      <!-- ********************************************************* -->
 </div>
-
-
-<!-- ********************************************************* -->
-
-
-<div id="timer" class="home">
-  <div id="timer_task_name"></div>
-  <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
-  <span id="display_hours"></span>
-  <span>:</span>
-  <input type="text" class="timer_input" id="input_minutes" placeholder="m" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
-  <span id="display_minutes"></span>
-  <span>:</span>
-  <input type="text" class="timer_input" id="input_seconds" placeholder="s" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
-  <span id="display_seconds"></span>
-  <button id="timer_start">Start</button>
-  <button id="timer_pause">Pause</button>
-  <button id="timer_stop">Stop</button>
-  <button id="timer_finish">Finish</button>
-  <span id="timer_error"></span>
-</div>
-
-
-<!-- ********************************************************* -->
-
-
-
-<div class="home">
-  <p>Add your tasks here. Please add your tasks before hitting start.</p>
-  <div id="newtask">
-      <input id="task_name" type="text" placeholder="Task Name">
-      <input id="task_desc" type="text" placeholder="Task Description">
-      <br>
-      <label for="estimate">Time Estimate (Minutes):</label>
-
-      <select name="estimate" id="estimate">
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="20">30</option>
-        <option value="40">40</option>
-        <option value="50">50</option>
-        <option value="60">60</option>
-        <option value="70">70</option>
-        <option value="80">80</option>
-        <option value="90">90</option>
-        <option value="100">100</option>
-      </select>
-
-      <button id="push">Add</button>
-  </div>
-  <div id="tasks">
-	<div id="todo"><h2>Todo</h2></div>
-	<div id="inprogress"><h2>In progress</h2></div>
-	<div id="done"><h2>Done</h2></div>
-  </div>
-</div>
-
-
-
-<!-- ********************************************************* -->
-
-
-
-<div id="playlist" class="home">
-	<!-- TODO: Replace iframe -->
-	<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/64rWSKJM87x39duTwqeEwo?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-</div>
-
-
-
-<!-- ********************************************************* -->
 
 
 <script src="login.js"></script>
 <script src="swap_nav.js"></script>
 <script src="timer.js"></script>
 <script src="task.js"></script>
+
+<script src="https://sortablejs.github.io/Sortable/Sortable.js"></script> <!-- SortableJS JavaScript library -->
 
 <script>
 function openNav() {
@@ -145,60 +138,10 @@ function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
 
-// https://web.dev/drag-and-drop/
-document.addEventListener('DOMContentLoaded', (event) => {
-
-  function handleDragStart(event) {
-    this.style.opacity = '0.5';
-	
-	dragSrcEl = this;
-	
-	event.dataTransfer.effectAllowed = 'move';
-	event.dataTransfer.setData('text/html', this.innerHTML); // TODO: REPLACE INNERHTML
-  }
-
-  function handleDragEnd() {
-    this.style.opacity = '1.0';
-
-    items.forEach(function (item) {
-		item.classList.remove('over');
-    });
-  }
-
-  function handleDragOver(event) {
-	event.preventDefault();
-    return false;
-  }
-
-  function handleDragEnter() {
-    this.classList.add('over');
-  }
-
-  function handleDragLeave() {
-	this.classList.remove('over');
-  }
-  
-  function handleDrop(event) {
-	event.stopPropagation();
-
-	if (dragSrcEl !== this) {
-		dragSrcEl.innerHTML = this.innerHTML; // TODO: REPLACE INNERHTML
-		this.innerHTML = e.dataTransfer.getData('text/html'); // TODO: REPLACE INNERHTML
-	}
-
-	return false;
-  }
-  
-  const container = document.querySelector("#tasks");
-  let items = container.querySelectorAll(".task"); // TODO: drag only kanban items
-  items.forEach(function(item) {
-    item.addEventListener('dragstart', handleDragStart);
-    item.addEventListener('dragover', handleDragOver);
-    item.addEventListener('dragenter', handleDragEnter);
-    item.addEventListener('dragleave', handleDragLeave);
-    item.addEventListener('dragend', handleDragEnd);
-    item.addEventListener('drop', handleDrop);
-  });
+var gridDiv = document.getElementById('gridDiv');
+new Sortable(gridDiv, {
+  animation: 150,
+  ghostClass: 'blue-background-class'
 });
 </script>
 
