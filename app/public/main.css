@@ -10,7 +10,7 @@ body {
 }
 div.home{
 	display: inline-block;
-  border: 10px solid black;
+  border: 10px solid #bbbbbb;
 	border-radius: 10px;
   padding: 40px;
   margin: 10px;
@@ -197,27 +197,24 @@ input[type=number] {
 		border-radius: 5px;
 }
 #todo{
-	border: 5px solid black;
     width: 500px;
     background-color: #c1e2fb;
-    margin: 5px;
-		padding: 10px;
+    margin: 3px;
+		padding: 15px;
 		border-radius: 5px;
 }
 #inprogress {
-	border: 5px solid black;
     width: 500px;
     background-color: #fbe4c1;
-    margin: 5px;
-		padding: 10px;
+    margin: 3px;
+		padding: 15px;
 		border-radius: 5px;
 }
 #done {
-	border: 5px solid black;
     width: 500px;
     background-color: #a5e3a2;
-    margin: 5px;
-		padding: 10px;
+    margin: 3px;
+		padding: 15px;
 		border-radius: 5px;
 }
 
@@ -273,4 +270,6 @@ input.timer_input {
 .icon {
 	height: 57px;
 	width: 42px;
+	opacity: 1;
 }
+.icon:hover {opacity: .5}
