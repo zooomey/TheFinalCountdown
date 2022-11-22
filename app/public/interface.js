@@ -56,13 +56,28 @@ var add_icon = document.getElementById('add_icon');
 var show_newtask = true;
 
 add_icon.addEventListener("click", () => {
-  if (show_newtask === true){
+  if (show_newtask){
     addtasks.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
     show_newtask = false;
   }
   else{
     addtasks.removeAttribute("style");
     show_newtask = true;
+  }
+});
+
+var kanban_icon = document.getElementById('kanban_icon');
+var kanban = document.getElementById('kanban');
+var show_kanban = true;
+
+kanban_icon.addEventListener("click", () => {
+  if (show_kanban){
+    kanban.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
+    show_kanban = false;
+  }
+  else{
+    kanban.removeAttribute("style");
+    show_kanban = true;
   }
 });
 
@@ -78,7 +93,7 @@ var help_icon = document.getElementById('help_icon');
 var show_info = true;
 
 help_icon.addEventListener("click", () => {
-  if (show_info === true){
+  if (show_info){
     info_1.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
     show_info = false;
   }
