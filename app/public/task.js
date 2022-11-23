@@ -6,10 +6,12 @@ let timer = document.getElementById("timer");
 let timerTaskName = document.getElementById("timer_task_name");
 let estimateInput = document.getElementById("estimate");
 
-// Placeholder
-let userID = 2;
+let userID = cookie.id;
 // For use in timer.js
 let taskID;
+
+//console.log("ID: ", cookie.id);
+//console.log("COOKIE: ", cookie.cookie);
 
 function refreshTaskList() {
     fetch("/search/tasks", {
@@ -18,11 +20,13 @@ function refreshTaskList() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            userid: userID
+            userid: userID,
+            cookie: cookie.cookie
         })
     }).then((response) => {
         if (response.status === 200) {
             response.json().then((body) => {
+                //console.log(body.rows);
                 while (tasks.firstChild) {
                     tasks.firstChild.remove();
                 }
@@ -114,12 +118,14 @@ addButton.addEventListener("click", () => {
                 userid: userID,
                 taskname: taskNameInput.value,
                 description: taskDescInput.value,
-                estimate: estimateInput.value
+                estimate: estimateInput.value,
+                cookie: cookie.cookie
             })
         }).then((response) => {
             if (response.status === 200) {
                 taskNameInput.value = "";
                 taskDescInput.value = "";
+                console.log("test");
                 refreshTaskList();
             } else {
                 // Error
