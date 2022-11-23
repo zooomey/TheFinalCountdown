@@ -60,9 +60,10 @@ startButton.addEventListener("click", () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                userid: 2, // Placeholder
+                userid: userID,
                 taskid: taskID,
-                date: Date.now() / 1000
+                date: Date.now() / 1000,
+								cookie: cookie.cookie
             })
         }).then((response) => {
             if (response.status === 200) {
@@ -156,7 +157,8 @@ pauseButton.addEventListener("click", () => {
             body: JSON.stringify({
                 sessionid: sessionID,
                 seconds: displayTime,
-                date: Date.now() / 1000
+                date: Date.now() / 1000,
+								cookie: cookie.cookie
             })
         }).then((response) => {
             if (response.status === 200) {
