@@ -7,6 +7,7 @@ let signout = document.getElementById("SIGNOUT");
 let create = document.getElementById("create");
 let swap_nav = document.getElementById("swap_nav");
 let login_nav_text = document.getElementById("login_nav_text");
+var alreadySignedIn = false;
 
 
 if (document.cookie){ // stay signed in
@@ -18,11 +19,15 @@ if (document.cookie){ // stay signed in
 	nav.textContent = "Welcome to The Final Countdown " + name + "!"; // change header
 	nav.removeAttribute('onclick');
 
-	var l = document.createElement('a');
-	signout.appendChild(l);
-	l.setAttribute('href', ''); // <======= load sign out / goodbye page & delete cookie
-	l.setAttribute('style', 'font-size: 15px');
-	l.textContent = " (SIGN OUT) ";
+	if (name) {
+		var l = document.createElement('a');
+		signout.appendChild(l);
+		l.setAttribute('href', ''); // <======= load sign out / goodbye page & delete cookie
+		l.setAttribute('style', 'font-size: 15px');
+		l.textContent = " (SIGN OUT) ";
+
+		alreadySignedIn = true;
+	}
 }
 
 
@@ -58,11 +63,15 @@ login.addEventListener("click", () => {
 					result.classList.remove("error");
 					console.log("Login successful. Welcome ", data.username);
 
-					var l = document.createElement('a');
-					signout.appendChild(l);
-					l.setAttribute('href', ''); // <======= load sign out / goodbye page & delete cookie
-					l.setAttribute('style', 'font-size: 15px');
-					l.textContent = " (SIGN OUT) ";
+					if (alreadySignedIn !== true){
+						var l = document.createElement('a');
+						signout.appendChild(l);
+						l.setAttribute('href', ''); // <======= load sign out / goodbye page & delete cookie
+						l.setAttribute('style', 'font-size: 15px');
+						l.textContent = " (SIGN OUT) ";
+					}
+
+					location.reload();
 
 				} else {
 					result.textContent = "Login failed";
