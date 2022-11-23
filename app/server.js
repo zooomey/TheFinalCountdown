@@ -144,6 +144,7 @@ CREATE TABLE tasks (
     userID NUMERIC,
     taskname VARCHAR(40),
     description VARCHAR,
+    estimate NUMERIC,
     total NUMERIC,
     completed BOOLEAN,
     abandoned BOOLEAN
@@ -151,15 +152,18 @@ CREATE TABLE tasks (
   let userid = req.body.userid;
   let taskname = req.body.taskname;
   let description = req.body.description;
-  
-  //checkCookie(cookie, userid);
+  let estimate = req.body.estimate;
+  let cookie = req.body.cookie;
 
-  if (taskname.length < 40 && taskname.length >= 1){
-      pool.query('INSERT INTO tasks (userID, taskname, description, total, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6)', [userid, taskname, description, 0, false, false]);
-      res.status(200).send();
+  if (checkCookie(cookie, userid)){
+    if (taskname.length < 40 && taskname.length >= 1 && description && estimate){
+        pool.query('INSERT INTO tasks (userID, taskname, description, estimate, total, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6, $7)', [userid, taskname, description, estimate, 0, false, false]);
+        res.status(200).send();
+    }
+    else{ res.status(400).send(); }
   }
-  else{ res.status(400).send(); }}
-);
+  else{ res.status(400).send(); } //invalid cookie
+});
 
 
 app.post("/close_task", (req, res) => {
@@ -186,20 +190,24 @@ app.post("/close_task", (req, res) => {
 
 app.post("/delete_task", (req, res) => {
   let taskID = req.body.taskID;
+  let cookie = req.body.cookie;
 
-  if (taskID) {
-    pool.query("DELETE FROM sessions WHERE taskid = $1", [taskID]).then((result) => {
-      pool.query("DELETE FROM tasks WHERE taskid = $1", [taskID]).then((result) => {
-        res.send();
+  if (checkCookie(cookie, userid)){
+    if (taskID) {
+      pool.query("DELETE FROM sessions WHERE taskid = $1", [taskID]).then((result) => {
+        pool.query("DELETE FROM tasks WHERE taskid = $1", [taskID]).then((result) => {
+          res.send();
+        }).catch((error) => {
+          res.status(500).send();
+        });
       }).catch((error) => {
         res.status(500).send();
       });
-    }).catch((error) => {
-      res.status(500).send();
-    });
-  } else {
-    res.status(400).send();
+    } else {
+      res.status(400).send();
+    }
   }
+  else{ res.status(400).send(); } //invalid cookie
 });
 
 
@@ -215,29 +223,27 @@ CREATE TABLE sessions (
     stop_date TIMESTAMP
 );
 */
-// Is there a way to ensure only the correct user can change their tasks?
-// Validate userID and taskID
   let userid = req.body.userid;
   let taskid = req.body.taskid;
   let date = req.body.date;
   let cookie = req.body.cookie;
 
-  //checkCookie(cookie, userid);
-
-  if (userid && taskid && date) {
-    pool.query('INSERT INTO sessions (userID, taskID, seconds, start_date, stop_date) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($4)) RETURNING sessionid', [userid, taskid, 0, date]).then(result => {
-      res.json({sessionID: result.rows[0].sessionid});
-    }).catch((error) => {
-      res.status(500).send();
-    });
+  if (checkCookie(cookie, userid)){
+    if (userid && taskid && date) {
+      pool.query('INSERT INTO sessions (userID, taskID, seconds, start_date, stop_date) VALUES ($1, $2, $3, to_timestamp($4), to_timestamp($4)) RETURNING sessionid', [userid, taskid, 0, date]).then(result => {
+        res.json({sessionID: result.rows[0].sessionid});
+      }).catch((error) => {
+        res.status(500).send();
+      });
+    }
+    else{ res.status(400).send(); }
   }
-  else{ res.status(400).send(); }}
-);
+  else{ res.status(400).send(); } //invalid cookie
+});
 
 
 app.post("/update_session", (req, res) => {
 // Session is updated when the timer resumes/stops/finishes or a minute passes on the timer
-// Is there a way to ensure only the correct user can change their tasks?
 // Does the specified session even exist?
 // Is new seconds value >= current seconds value?
 // Is it already finished?
@@ -246,73 +252,77 @@ app.post("/update_session", (req, res) => {
   let date = req.body.date;
   let cookie = req.body.cookie;
 
-  //checkCookie(cookie, userid);
-
-  if(sessionid && seconds && date) {
-    pool.query("UPDATE sessions SET seconds = $1, stop_date = to_timestamp($2) WHERE sessionid = $3", [seconds, date, sessionid]).then((result) => {
-      res.send();
-    }).catch((error) => {
-      res.status(500).send();
-    });
-  } else {
-    res.status(400).send();
+  if (checkCookie(cookie, userid)){
+    if(sessionid && seconds && date) {
+      pool.query("UPDATE sessions SET seconds = $1, stop_date = to_timestamp($2) WHERE sessionid = $3", [seconds, date, sessionid]).then((result) => {
+        res.send();
+      }).catch((error) => {
+        res.status(500).send();
+      });
+    } else {
+      res.status(400).send();
+    }
   }
+  else{ res.status(400).send(); } //invalid cookie
 });
 
 
 app.post("/search/tasks", (req, res) => {
   let userid = req.body.userid;
+  let cookie = req.body.cookie;
 
-  if (req.query.taskname){
-    pool.query(`SELECT * FROM tasks WHERE taskname = '${req.query.taskname}'`).then(result => {
-        res.status(200).json({"rows": result.rows, status: 200});
-    });
+  if (checkCookie(cookie, userid)) {
+    if (req.query.taskname){
+      pool.query(`SELECT * FROM tasks WHERE taskname = '${req.query.taskname}'`).then(result => {
+          res.status(200).json({"rows": result.rows, status: 200});
+      });
+    }
+    else{
+      pool.query("SELECT * FROM tasks WHERE userID = $1", [
+        userid,
+      ]).then(result => {
+          res.status(200).json({"rows": result.rows, status: 200});
+      });
+    }
   }
-  else{
-    pool.query("SELECT * FROM tasks WHERE userID = $1", [
-      userid,
-    ]).then(result => {
-        res.status(200);
-        res.json({"rows": result.rows});
-    });
-  }
+  else{ res.status(400).send(); } //invalid cookie
 });
 
 
 app.post("/search/sessions", (req, res) => {
   let userid = req.body.userid;
+  let cookie = req.body.cookie;
 
-  if (req.query.taskname){
-    pool.query(`SELECT * FROM sessions WHERE taskname = '${req.query.taskname}'`).then(result => {
-        res.status(200).json({"rows": result.rows, status: 200});
-    });
+  if (checkCookie(cookie, userid)) {
+    if (req.query.taskname){
+      pool.query(`SELECT * FROM sessions WHERE taskname = '${req.query.taskname}'`).then(result => {
+          res.status(200).json({"rows": result.rows, status: 200});
+      });
+    }
+    else{
+      pool.query("SELECT * FROM sessions WHERE userID = $1", [
+        userid,
+      ]).then(result => {
+          res.status(200);
+          res.json({"rows": result.rows});
+      });
+    }
   }
-  else{
-    pool.query("SELECT * FROM sessions WHERE userID = $1", [
-      userid,
-    ]).then(result => {
-        res.status(200);
-        res.json({"rows": result.rows});
-    });
-  }
+  else{ res.status(400).send(); } //invalid cookie
 });
 
 
-function checkCookie(cookie, id){
+async function checkCookie(cookie, id){
+let cookieBool;
+
   if (cookie === ''){
     return false;
   }
-  else if (cookie){
-    var hashedCookie = cookie.replace('session=', ''); //remove cookie name (most browsers need a name)
-    hashedCookie = JSON.parse(hashedCookie);
-    if (hashedCookie.cookie) {
-      let plaintext = sessionCookies[id].cookie;
+  else {
+    let plaintext = sessionCookies[id].cookie;
 
-      //console.log("plain: ", plaintext);
-      //console.log("hash: ", hashedCookie.cookie);
-
-      bcrypt
-          .compare(plaintext, hashedCookie.cookie)
+    cookieBool = await bcrypt
+          .compare(plaintext, cookie)
           .then((cookiesMatched) => {
               if (cookiesMatched) {
                 return true;
@@ -321,10 +331,8 @@ function checkCookie(cookie, id){
                 return false;
               }
       });
-    }
-    else {return false}; // invalid cookie
+    return cookieBool;
   }
-  else {return false}; // no cookie
 }
 
 
