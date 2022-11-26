@@ -92,7 +92,7 @@ input[type=number] {
   padding-top: 60px;
 	border-radius: 0 30px 30px 0;
 }
-.sidenav .closebtn {
+.sidenav #closebtn {
   position: absolute;
   top: 0;
   right: 25px;
