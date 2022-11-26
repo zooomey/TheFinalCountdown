@@ -7,6 +7,7 @@ let signout = document.getElementById("SIGNOUT");
 let create = document.getElementById("create");
 let swap_nav = document.getElementById("swap_nav");
 let login_nav_text = document.getElementById("login_nav_text");
+let closebtn = document.getElementById("closebtn");
 var alreadySignedIn = false;
 
 
@@ -22,7 +23,7 @@ if (document.cookie){ // stay signed in
 	if (name) {
 		var l = document.createElement('a');
 		signout.appendChild(l);
-		l.setAttribute('href', ''); // <======= load sign out / goodbye page & delete cookie
+		l.setAttribute('href', ''); // <======= load sign out / goodbye page
 		l.setAttribute('style', 'font-size: 15px');
 		l.textContent = " (SIGN OUT) ";
 
@@ -50,7 +51,7 @@ login.addEventListener("click", () => {
 					var username = data.username;
 					var cookie = JSON.stringify({id: data.userID, username: username, cookie: data.cookie});
 
-					document.cookie = `session=${cookie}`; // <====== can make this cookie less obvious / more secure later
+					document.cookie = `session=${cookie}`;
 
 					result.textContent = "Login successful. Welcome " + username + "!";
 					nav.textContent = "Welcome to The Final Countdown " + username + "!";
@@ -66,7 +67,7 @@ login.addEventListener("click", () => {
 					if (alreadySignedIn !== true){
 						var l = document.createElement('a');
 						signout.appendChild(l);
-						l.setAttribute('href', ''); // <======= load sign out / goodbye page & delete cookie
+						l.setAttribute('href', ''); // <======= load sign out / goodbye page
 						l.setAttribute('style', 'font-size: 15px');
 						l.textContent = " (SIGN OUT) ";
 					}
@@ -115,3 +116,19 @@ signout.addEventListener("click", () => {
 	nav.textContent = "SIGN IN";
 	signout.textContent = "";
 });
+
+
+closebtn.addEventListener("click", () => {
+	clearCredentials();
+});
+
+
+swap_nav.addEventListener("click", () => {
+	clearCredentials();
+});
+
+
+function clearCredentials() {
+	usernameInput.value = "";
+	passwordInput.value = "";
+}
