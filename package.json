@@ -23,5 +23,6 @@
     "url": "https://github.com/zooomey/TheFinalCountdown/issues"
   },
   "homepage": "https://github.com/zooomey/TheFinalCountdown#readme",
-  "description": ""
+  "description": "The Final Countdown!",
+  "devDependencies": {}
 }
