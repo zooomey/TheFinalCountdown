@@ -57,7 +57,7 @@
 <!-- ********************************************************* -->
 
       <div class="home" id="info_1" style="max-width: 1000px">
-        <div class="divTitle"><table width="100%"><tr><td><h2>Pomodoro Technique</h2></td><td align="right"><span class="divClose">&times;</span></td></tr></table></div>
+        <div class="divTitle"><table width="100%"><tr><td><h2>Pomodoro Technique</h2></td><td align="right"><span class="divClose" id="close_info">&times;</span></td></tr></table></div>
         by <a href="https://www.techtarget.com/whatis/definition/pomodoro-technique" target="_blank">Robert Sheldon & Ivy Wigmore</a>
       <br/><br/>
       <table><tr><td>
@@ -76,8 +76,8 @@
 
 
       <div class="home" id="faq" style="max-width: 1000px">
-        <div class="divTitle"><table width="100%"><tr><td><h2>FAQ</h2></td><td align="right"><span class="divClose">&times;</span></td></tr></table></div>
-      <br/><table><tr><td>
+        <div class="divTitle"><table width="100%"><tr><td><h2>FAQ</h2></td><td align="right"><span class="divClose" id="close_faq">&times;</span></td></tr></table></div>
+        <br/><table><tr><td>
         <ol>
           <li><h3>How do I use this website?</h3></li>
           <br/>
@@ -116,6 +116,8 @@
 
 
       <div id="timer" class="home">
+        <div class="divTitle"><table width="100%"><tr><td><h2>Timer</h2></td><td align="right"><span class="divClose" id="close_timer">&times;</span></td></tr></table></div>
+
         <div id="timer_task_name"></div>
         <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
         <span id="display_hours"></span>
@@ -137,7 +139,8 @@
 
 
       <div class="home" id="addtasks">
-        <p>Add your tasks here. Please add your tasks before hitting start.</p>
+        <div class="divTitle"><table width="100%"><tr><td><h2>Add your tasks here.</h2></td><td align="right"><span class="divClose" id="close_add">&times;</span></td></tr></table></div>
+
         <div id="newtask">
             <input id="task_name" type="text" placeholder="Task Name">
             <input id="task_desc" type="text" placeholder="Task Description">
@@ -167,6 +170,8 @@
       <!-- ********************************************************* -->
 
       <div class="home" id="kanban">
+        <div class="divTitle"><table width="100%"><tr><td><h2>Kanban</h2></td><td align="right"><span class="divClose" id="close_kanban">&times;</span></td></tr></table></div>
+
         <div id="todo"><h2>Tasks To-Do:</h2>
         </div>
         <div id="inprogress"><h2>Tasks In Progress:</h2>
