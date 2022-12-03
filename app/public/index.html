@@ -38,17 +38,17 @@
   	<span style="font-size:30px;cursor:pointer" onclick="openNav()"> &nbsp; &nbsp; &#9776; </span>
     <span id="SIGNIN" style="font-size:30px;cursor:pointer" onclick="openNav()">SIGN IN</span> &nbsp; &nbsp; &nbsp; <span id="SIGNOUT"></span>
   </td><td></td><td width="70px">
-    <span id="home_icon"><img src="img/home_icon.png" class="icon"></span>
+    <span id="home_icon"><img src="img/home_icon.png" class="icon" alt="Home" title="Home"></span>
   </td><td  width="70px">
-    <span id="add_icon"><img src="img/add_icon.png" class="icon"></span>
+    <span id="add_icon"><img src="img/add_icon.png" class="icon" alt="Add Tasks" title="Add Tasks"></span>
   </td><td width="70px">
-    <span id="timer_icon"><img src="img/timer_icon.png" class="icon"></span>
+    <span id="timer_icon"><img src="img/timer_icon.png" class="icon" alt="Timer" title="Timer"></span>
   </td><td  width="70px">
-    <span id="kanban_icon"><img src="img/kanban_icon.png" class="icon"></span>
+    <span id="kanban_icon"><img src="img/kanban_icon.png" class="icon" alt="Kanban" title="Kanban"></span>
   </td><td  width="70px">
-    <span id="report_icon"><img src="img/report_icon.png" class="icon"></span>
+    <span id="report_icon"><img src="img/report_icon.png" class="icon" alt="User Report" title="User Report"></span>
   </td><td  width="70px">
-    <span id="help_icon"><img src="img/help_icon.png" class="icon"></span>
+    <span id="help_icon"><img src="img/help_icon.png" class="icon" alt="Help" title="Help"></span>
   </td></tr></table>
 </div>
 
@@ -56,8 +56,9 @@
 <div id="gridDiv" class="board">
 <!-- ********************************************************* -->
 
-      <div class="home" id="info_1">
-        <h2>Pomodoro Technique</h2> by <a href="https://www.techtarget.com/whatis/definition/pomodoro-technique" target="_blank">Robert Sheldon & Ivy Wigmore</a>
+      <div class="home" id="info_1" style="max-width: 1000px">
+        <div class="divTitle"><table width="100%"><tr><td><h2>Pomodoro Technique</h2></td><td align="right"><span class="divClose">&times;</span></td></tr></table></div>
+        by <a href="https://www.techtarget.com/whatis/definition/pomodoro-technique" target="_blank">Robert Sheldon & Ivy Wigmore</a>
       <br/><br/>
       <table><tr><td>
       <p>
@@ -69,6 +70,43 @@
         </p>
       </td></tr><tr>
       <td><br/><img src="https://qph.cf2.quoracdn.net/main-qimg-69bf0c447faf7322f403cb2499f2a9c4-pjlq" width="602">
+      </td></tr></table>
+
+      </div>
+
+
+      <div class="home" id="faq" style="max-width: 1000px">
+        <div class="divTitle"><table width="100%"><tr><td><h2>FAQ</h2></td><td align="right"><span class="divClose">&times;</span></td></tr></table></div>
+      <br/><table><tr><td>
+        <ol>
+          <li><h3>How do I use this website?</h3></li>
+          <br/>
+          <ul style="list-style-type: square; padding-left:30px; line-height: 1.5">
+            <li>You must create an account and sign-in to view task management options.</li>
+            <li style="list-style: none"><table><tr><td style="padding: 10px"><img src="img/drag_img.png" height="110px" width="77px"></td><td style="padding: 10px; vertical-align: top">
+              <ul><li>You may customize your landing page by dragging widgets around the page. The icons at the top right corner will open/close particular widgets. Clicking the home icon will reset to defaults and reopen any widgets that were closed.</li></ul>
+            </td></tr></table></li>
+            <li>Adding Tasks...</li>
+            <li>The timer...</li>
+            <li>Kanban...</li>
+            <li>User Reports...</li>
+        </ul>
+
+
+          <br/><br/><br/>
+          <li><h3>What is the Pomodoro Technique?</h3></li>
+          <br/>Read more about it here: <br/><br/>
+            <ul style="list-style-type: square; padding-left:30px; line-height: 1.5">
+              <li><a src="https://todoist.com/productivity-methods/pomodoro-technique"><b>The Pomodoro Technique</b> by Laura Scroggs</a></li>
+              <li><a src="https://en.wikipedia.org/wiki/Pomodoro_Technique"><b>Pomodoro Technique</b></a> Wiki</li>
+              <li><a src="https://www.lifehack.org/articles/productivity/the-pomodoro-technique-is-it-right-for-you.html"><b>Does the Pomodoro Technique Work for Your Productivity?</b> by Tucker Cummings</a></li>
+              <li><a src="https://www.forbes.com/sites/bryancollinseurope/2020/03/03/the-pomodoro-technique/?sh=f2e7fee39857"><b>The Pomodoro Technique Explained</b> Bryan Collins</a></li>
+              <li><a src="https://youtu.be/1pADI_eZ_-U"><b>What is Pomodoro Technique | Explained in 2 min</b></a> by Productivity Guy</li>
+              <li><a src="https://smartphones.gadgethacks.com/how-to/tried-5-different-pomodoro-apps-over-5-days-heres-which-helped-me-get-most-done-0203816/"><b>I Tried 5 Different Pomodoro Apps Over 5 Days</b></a> by Jake Peterson</li>
+            </ul>
+          </ol>
+      </td></tr><tr>
+      <td><br/>
       </td></tr></table>
 
       </div>
