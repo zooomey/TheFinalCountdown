@@ -1,4 +1,4 @@
-//let userID = document.getElementById("userid");
+let userID = document.getElementById("userid");
 let button = document.getElementById("generate");
 let test = document.getElementById("test");
 let id;
@@ -10,7 +10,7 @@ if (document.cookie){
 	name = cookie.username;
 	id = cookie.id;
 
-	userID.textContent = name; // change header
+	//userID.textContent = name; // change header
 }
 
 button.addEventListener("click", () => {
@@ -32,7 +32,7 @@ button.addEventListener("click", () => {
 					report_title.textContent = "We can't generate a report if there's no user data! Try again after you get some work done. "
 				}
 				else{
-					alert("blehhhh");
+					report_title.textContent = "User-Generated Report: "
 				}
 
 				if (num > 0)

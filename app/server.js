@@ -346,10 +346,12 @@ async function checkCookie(cookie, id){
     } 
   } catch (error) {
     return false;
-  } else if (sessionCookies.length == 0){
+  } 
+  if (sessionCookies.length == 0){
     return false;
   }
 }
+
 
 
 app.listen(port, hostname, () => {
