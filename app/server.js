@@ -157,7 +157,7 @@ CREATE TABLE tasks (
 
   if (checkCookie(cookie, userid)){
     if (taskname.length < 40 && taskname.length >= 1 && description && estimate){
-        pool.query('INSERT INTO tasks (userID, taskname, description, estimate, total, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6, $7)', [userid, taskname, description, estimate, 0, false, false]);
+        pool.query('INSERT INTO tasks (userID, taskname, description, estimate, total, inprogress, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [userid, taskname, description, estimate, 0, false, false, false]);
         res.status(200).send();
     }
     else{ res.status(400).send(); }
@@ -171,13 +171,13 @@ app.post("/close_task", (req, res) => {
   let status = req.body.status;
 
   if (taskID && status === "completed") {
-    pool.query("UPDATE tasks SET completed = true WHERE taskid = $1", [taskID]).then((result) => {
+    pool.query("UPDATE tasks SET inprogress = false, completed = true WHERE taskid = $1", [taskID]).then((result) => {
       res.send();
     }).catch((error) => {
       res.status(500).send();
     });
   } else if (taskID && status === "abandoned") {
-    pool.query("UPDATE tasks SET abandoned = true WHERE taskid = $1", [taskID]).then((result) => {
+    pool.query("UPDATE tasks SET inprogress = false, abandoned = true WHERE taskid = $1", [taskID]).then((result) => {
       res.send();
     }).catch((error) => {
       res.status(500).send();
@@ -243,13 +243,11 @@ CREATE TABLE sessions (
 
 
 app.post("/update_session", (req, res) => {
-// Session is updated when the timer resumes/stops/finishes or a minute passes on the timer
-// Does the specified session even exist?
-// Is new seconds value >= current seconds value?
-// Is it already finished?
+  // Session is updated when the timer resumes/stops/finishes or a minute passes on the timer
   let sessionid = req.body.sessionid;
   let seconds = req.body.seconds;
   let date = req.body.date;
+  let userid = req.body.userid;
   let cookie = req.body.cookie;
 
   if (checkCookie(cookie, userid)){
@@ -263,7 +261,9 @@ app.post("/update_session", (req, res) => {
       res.status(400).send();
     }
   }
-  else{ res.status(400).send(); } //invalid cookie
+  else{
+    res.status(400).send();
+  } //invalid cookie
 });
 
 
@@ -273,19 +273,27 @@ app.post("/search/tasks", (req, res) => {
 
   if (checkCookie(cookie, userid)) {
     if (req.query.taskname){
-      pool.query(`SELECT * FROM tasks WHERE taskname = '${req.query.taskname}'`).then(result => {
-          res.status(200).json({"rows": result.rows, status: 200});
+      pool.query(
+        `SELECT * FROM tasks WHERE taskname = '${req.query.taskname}'`
+      ).then((result) => {
+        res.status(200).json({"rows": result.rows, status: 200});
+      }).catch((error) => {
+        res.status(500).send();
       });
     }
     else{
-      pool.query("SELECT * FROM tasks WHERE userID = $1", [
-        userid,
-      ]).then(result => {
-          res.status(200).json({"rows": result.rows, status: 200});
+      pool.query(
+        "SELECT * FROM tasks WHERE userID = $1", [userid]
+      ).then((result) => {
+        res.status(200).json({"rows": result.rows, status: 200});
+      }).catch((error) => {
+        res.status(500).send();
       });
     }
   }
-  else{ res.status(400).send(); } //invalid cookie
+  else{
+    res.status(400).send();
+  } //invalid cookie
 });
 
 
@@ -313,25 +321,31 @@ app.post("/search/sessions", (req, res) => {
 
 
 async function checkCookie(cookie, id){
-let cookieBool;
+  try {
+    let cookieBool;
 
-  if (cookie === ''){
+    if (cookie === ''){
+      return false;
+    }
+    else {
+      let plaintext = sessionCookies[id].cookie;
+
+      cookieBool = await bcrypt
+            .compare(plaintext, cookie)
+            .then((cookiesMatched) => {
+                if (cookiesMatched) {
+                  return true;
+                }
+                else {
+                  return false;
+                }
+        }).catch((error) => {
+          return false;
+        });
+      return cookieBool;
+    } 
+  } catch (error) {
     return false;
-  }
-  else {
-    let plaintext = sessionCookies[id].cookie;
-
-    cookieBool = await bcrypt
-          .compare(plaintext, cookie)
-          .then((cookiesMatched) => {
-              if (cookiesMatched) {
-                return true;
-              }
-              else {
-                return false;
-              }
-      });
-    return cookieBool;
   }
 }
 
