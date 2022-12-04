@@ -1,50 +1,72 @@
+var addtasks = document.getElementById('addtasks');
+var info_1 = document.getElementById('info_1');
+var faq = document.getElementById('faq');
+var kanban = document.getElementById('kanban');
+var report = document.getElementById('report');
+
 var home_icon = document.getElementById('home_icon');
 var timer_icon = document.getElementById('timer_icon');
-var addtasks = document.getElementById('addtasks');
 var add_icon = document.getElementById('add_icon');
-var info_1 = document.getElementById('info_1');
-var help_icon = document.getElementById('help_icon');
-var kanban_icon = document.getElementById('kanban_icon');
-var kanban = document.getElementById('kanban');
 var report_icon = document.getElementById('report_icon');
-var faq = document.getElementById('faq');
+var kanban_icon = document.getElementById('kanban_icon');
+var help_icon = document.getElementById('help_icon');
 
 let close_info = document.getElementById("close_info");
 let close_faq = document.getElementById("close_faq");
 let close_add = document.getElementById("close_add");
 let close_timer = document.getElementById("close_timer");
 let close_kanban = document.getElementById("close_kanban");
+let close_report = document.getElementById("close_report");
 
 var show_faq = true;
-var show_add = true;
-var show_newtask = true;
-var show_timer = true;
-var show_kanban = true;
 var show_info = true;
+var show_add = false;
+var show_report = false;
+var show_timer = false;
+var show_kanban = false;
+
+//*********************************************************
+
+if (alreadySignedIn) {
+    refreshTaskList();
+} else {
+    addtasks.style.display = "none";
+		timer.style.display = "none";
+		report.style.display = "none";
+		kanban.style.display = "none";
+		show_add = false;
+		show_timer = false;
+		show_report = false;
+		show_timer = false;
+		show_kanban = false;
+}
+
 //*********************************************************
 
 close_info.addEventListener("click", () => {
 	show_info = false;
-	info_1.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
+	info_1.style.display = "none";
 	});
 close_faq.addEventListener("click", () => {
 	show_faq = false;
-	faq.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
+	faq.style.display = "none";
 	});
 close_add.addEventListener("click", () => {
 	show_add = false;
-	addtasks.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
+	addtasks.style.display = "none";
 	});
 close_timer.addEventListener("click", () => {
 	show_timer = false;
-	timer.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
+	timer.style.display = "none";
 	});
 close_kanban.addEventListener("click", () => {
 	show_kanban = false;
-	kanban.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
+	kanban.style.display = "none";
 	});
-
-
+close_report.addEventListener("click", () => {
+	show_report = false;
+	report.style.display = "none";
+	});
 
 //*********************************************************
 
@@ -88,49 +110,71 @@ new Sortable(gridDiv, {
 
 //*********************************************************
 
-
 home_icon.addEventListener("click", () => {
   window.location.replace("index.html");
 });
 
 timer_icon.addEventListener("click", () => {
+	if (alreadySignedIn) {
+		if (show_timer){
+	    timer.style.display = "none";
+	    show_timer = false;
+	  }
+	  else{
+	    timer.style.display = "block";
+	    show_timer = true;
+	  }
+	}
 });
 
 add_icon.addEventListener("click", () => {
-  if (show_newtask){
-    addtasks.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
-    show_newtask = false;
-  }
-  else{
-    addtasks.removeAttribute("style");
-    show_newtask = true;
-  }
+	if (alreadySignedIn) {
+	  if (show_add){
+	    addtasks.style.display = "none";
+	    show_add = false;
+	  }
+	  else{
+	    addtasks.style.display = "block";
+	    show_add = true;
+	  }
+	}
 });
-
 
 kanban_icon.addEventListener("click", () => {
-  if (show_kanban){
-    kanban.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
-    show_kanban = false;
-  }
-  else{
-    kanban.removeAttribute("style");
-    show_kanban = true;
-  }
+	  if (show_kanban){
+	    kanban.style.display = "none";
+	    show_kanban = false;
+	  }
+	  else{
+	    kanban.style.display = "flex";
+	    show_kanban = true;
+	  }
 });
-
 
 report_icon.addEventListener("click", () => {
+	if (alreadySignedIn) {
+		if (show_report){
+			report.style.display = "none";
+			show_report = false;
+		}
+		else{
+			report.style.display = "block";
+			show_report = true;
+		}
+	}
 });
-
 
 help_icon.addEventListener("click", () => {
   if (show_faq){
-    faq.setAttribute("style", "height: 0px; overflow: hidden; margin: 0; padding: 0; border: 0");
+    faq.style.display = "none";
+		info_1.style.display = "none";
     show_faq = false;
+		show_info = false;
   }
   else{
-    faq.removeAttribute("style");
+    faq.style.display = "block";
+		info_1.style.display = "block";
     show_faq = true;
+		show_info = true;
   }
 });
