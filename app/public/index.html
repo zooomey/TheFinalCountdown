@@ -120,6 +120,7 @@
         <div class="divTitle"><table width="100%"><tr><td><h2>Timer</h2></td><td align="right"><span class="divClose" id="close_timer">&times;</span></td></tr></table></div>
 
         <div id="timer_task_name"></div>
+        <div id="timer_break_label">Break</div>
         <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
         <span id="display_hours"></span>
         <span>:</span>
@@ -129,9 +130,9 @@
         <input type="text" class="timer_input" id="input_seconds" placeholder="s" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
         <span id="display_seconds"></span>
         <button id="timer_start">Start</button>
+        <button id="timer_break">Break</button>
         <button id="timer_pause">Pause</button>
         <button id="timer_stop">Stop</button>
-        <button id="timer_finish">Finish</button>
         <span id="timer_error"></span>
       </div>
 

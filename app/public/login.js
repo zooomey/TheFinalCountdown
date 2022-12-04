@@ -74,6 +74,9 @@ login.addEventListener("click", () => {
 
 					location.reload();
 
+					document.getElementById("addtasks").style.display = "block";
+					refreshTaskList();
+
 				} else {
 					result.textContent = "Login failed";
 					result.classList.add("error");

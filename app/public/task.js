@@ -6,7 +6,6 @@ let timer = document.getElementById("timer");
 let timerTaskName = document.getElementById("timer_task_name");
 let estimateInput = document.getElementById("estimate");
 
-let userID = cookie.id;
 // For use in timer.js
 let taskID;
 
@@ -20,7 +19,7 @@ function refreshTaskList() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            userid: userID,
+            userid: cookie.id,
             cookie: cookie.cookie
         })
     }).then((response) => {
@@ -31,7 +30,7 @@ function refreshTaskList() {
                     tasks.firstChild.remove();
                 }
                 for (task of body.rows) {
-                    if (!task.completed && !task.abandoned) {
+                    if (!task.abandoned) {//task.inprogress) {
                         let taskDiv = document.createElement("div");
                         taskDiv.className = "task";
                         let taskName = document.createElement("span");
@@ -71,26 +70,6 @@ function refreshTaskList() {
                                 }
                             });
                         });
-                        let deleteButton = document.createElement("button");
-                        deleteButton.textContent = "Delete";
-                        taskDiv.appendChild(deleteButton);
-                        deleteButton.addEventListener("click", () => {
-                            fetch("/delete_task", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json"
-                                },
-                                body: JSON.stringify({
-                                    taskID: deleteButton.parentElement.id
-                                })
-                            }).then((response) => {
-                                if (response.status === 200) {
-                                    refreshTaskList();
-                                } else {
-                                    // Error
-                                }
-                            });
-                        });
                         tasks.appendChild(taskDiv);
                     }
                 }
@@ -101,7 +80,11 @@ function refreshTaskList() {
     })
 }
 
-refreshTaskList();
+if (alreadySignedIn) {
+    refreshTaskList();
+} else {
+    document.getElementById("addtasks").style.display = "none";
+}
 
 addButton.addEventListener("click", () => {
     if (taskNameInput.value.length === 0) {
@@ -115,7 +98,7 @@ addButton.addEventListener("click", () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                userid: userID,
+                userid: cookie.id,
                 taskname: taskNameInput.value,
                 description: taskDescInput.value,
                 estimate: estimateInput.value,
