@@ -18,13 +18,9 @@ let close_timer = document.getElementById("close_timer");
 let close_kanban = document.getElementById("close_kanban");
 let close_report = document.getElementById("close_report");
 
-var show_faq = true;
-var show_info = true;
-var show_add = false;
-var show_report = false;
-var show_timer = false;
-var show_kanban = false;
-
+//show info & hide faq by default
+let show_faq = false;
+let show_info = true;
 //*********************************************************
 
 if (alreadySignedIn) {
@@ -34,37 +30,28 @@ if (alreadySignedIn) {
 		timer.style.display = "none";
 		report.style.display = "none";
 		kanban.style.display = "none";
-		show_add = false;
-		show_timer = false;
-		show_report = false;
-		show_timer = false;
-		show_kanban = false;
 }
 
 //*********************************************************
 
 close_info.addEventListener("click", () => {
-	show_info = false;
 	info_1.style.display = "none";
+  show_info = false;
 	});
 close_faq.addEventListener("click", () => {
-	show_faq = false;
 	faq.style.display = "none";
+  show_faq = false;
 	});
 close_add.addEventListener("click", () => {
-	show_add = false;
 	addtasks.style.display = "none";
 	});
 close_timer.addEventListener("click", () => {
-	show_timer = false;
 	timer.style.display = "none";
 	});
 close_kanban.addEventListener("click", () => {
-	show_kanban = false;
 	kanban.style.display = "none";
 	});
 close_report.addEventListener("click", () => {
-	show_report = false;
 	report.style.display = "none";
 	});
 
@@ -116,65 +103,35 @@ home_icon.addEventListener("click", () => {
 
 timer_icon.addEventListener("click", () => {
 	if (alreadySignedIn) {
-		if (show_timer){
-	    timer.style.display = "none";
-	    show_timer = false;
-	  }
-	  else{
 	    timer.style.display = "block";
-	    show_timer = true;
-	  }
 	}
 });
 
 add_icon.addEventListener("click", () => {
 	if (alreadySignedIn) {
-	  if (show_add){
-	    addtasks.style.display = "none";
-	    show_add = false;
-	  }
-	  else{
 	    addtasks.style.display = "block";
-	    show_add = true;
-	  }
+	}
+	else{
+	    addtasks.style.display = "none";
 	}
 });
 
 kanban_icon.addEventListener("click", () => {
-	  if (show_kanban){
-	    kanban.style.display = "none";
-	    show_kanban = false;
-	  }
-	  else{
 	    kanban.style.display = "flex";
-	    show_kanban = true;
-	  }
 });
 
 report_icon.addEventListener("click", () => {
 	if (alreadySignedIn) {
-		if (show_report){
-			report.style.display = "none";
-			show_report = false;
+			report.style.display = "block";
 		}
 		else{
-			report.style.display = "block";
-			show_report = true;
+			report.style.display = "none";
 		}
-	}
 });
 
 help_icon.addEventListener("click", () => {
-  if (show_faq){
-    faq.style.display = "none";
-		info_1.style.display = "none";
-    show_faq = false;
-		show_info = false;
-  }
-  else{
-    faq.style.display = "block";
-		info_1.style.display = "block";
-    show_faq = true;
-		show_info = true;
-  }
+  faq.style.display = "block";
+  info_1.style.display = "block";
+  show_faq = true;
+  show_info = true;
 });
