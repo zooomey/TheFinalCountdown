@@ -317,6 +317,8 @@ let cookieBool;
 
   if (cookie === ''){
     return false;
+  } else if (sessionCookies.length == 0){
+    return false;
   }
   else {
     let plaintext = sessionCookies[id].cookie;
