@@ -9,6 +9,7 @@ body {
 	background-color: lightgray;
 }
 div.home{
+	width: 100%;
 	display: inline-block;
   border: 10px solid #bbbbbb;
 	border-radius: 10px;
