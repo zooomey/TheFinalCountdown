@@ -219,9 +219,6 @@ input[type=number] {
 #playlist{
 	padding: 0px;
 }
-input.timer_input {
-	width: 1.5em;
-}
 ::placeholder {
 	text-align: center;
 }
@@ -288,4 +285,32 @@ input.timer_input {
 	opacity: 1;
 	color: red;
 	background-color: #efefef;
+}
+.timer_title {
+  margin-bottom: 10px;
+}
+#estimate {
+  margin-top: 10px;
+}
+.timer_input {
+	width: 32px;
+  height: 30px;
+  font-size: x-large;
+}
+.timer_text {
+  font-size: x-large;
+}
+.timer_button {
+  margin-right: 10px;
+  margin-top: 10px;
+  color: white;
+  background-color: #0d75ec;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  height: 45px;
+  width: 70px;
+  border-radius: 5px;
+  font-family: 'Poppins',sans-serif;
 }

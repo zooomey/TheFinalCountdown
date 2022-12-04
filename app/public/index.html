@@ -118,20 +118,21 @@
       <div id="timer" class="home">
         <div class="divTitle"><table width="100%"><tr><td><h2>Timer</h2></td><td align="right"><span class="divClose" id="close_timer">&times;</span></td></tr></table></div>
 
-        <div id="timer_task_name"></div>
-        <div id="timer_break_label">Break</div>
+        <div id="timer_task_name" class="timer_title"></div>
+        <div id="timer_break_label" class="timer_title">Break</div>
         <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
-        <span id="display_hours"></span>
-        <span>:</span>
+        <span id="display_hours" class="timer_text"></span>
+        <span class="timer_text">:</span>
         <input type="text" class="timer_input" id="input_minutes" placeholder="m" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
-        <span id="display_minutes"></span>
-        <span>:</span>
+        <span id="display_minutes" class="timer_text"></span>
+        <span class="timer_text">:</span>
         <input type="text" class="timer_input" id="input_seconds" placeholder="s" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
-        <span id="display_seconds"></span>
-        <button id="timer_start">Start</button>
-        <button id="timer_break">Break</button>
-        <button id="timer_pause">Pause</button>
-        <button id="timer_stop">Stop</button>
+        <span id="display_seconds" class="timer_text"></span>
+        <div></div>
+        <button id="timer_start" class="timer_button">Start</button>
+        <button id="timer_break" class="timer_button">Break</button>
+        <button id="timer_pause" class="timer_button">Pause</button>
+        <button id="timer_stop" class="timer_button">Stop</button>
         <span id="timer_error"></span>
       </div>
 
@@ -163,8 +164,8 @@
 
             <button id="push">Add</button>
         </div>
-        <div id="tasks">
-        </div>
+        <div id="add_tasks_error">Error connecting to server.</div>
+        <div id="tasks"></div>
       </div>
 
 

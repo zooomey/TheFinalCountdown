@@ -5,6 +5,7 @@ let taskDescInput = document.getElementById("task_desc");
 let timer = document.getElementById("timer");
 let timerTaskName = document.getElementById("timer_task_name");
 let estimateInput = document.getElementById("estimate");
+let tasksError = document.getElementById("add_tasks_error");
 
 // For use in timer.js
 let taskID;
@@ -13,6 +14,7 @@ let taskID;
 //console.log("COOKIE: ", cookie.cookie);
 
 function refreshTaskList() {
+    tasksError.style.display = "none";
     fetch("/search/tasks", {
         method: "POST",
         headers: {
@@ -25,7 +27,6 @@ function refreshTaskList() {
     }).then((response) => {
         if (response.status === 200) {
             response.json().then((body) => {
-                //console.log(body.rows);
                 while (tasks.firstChild) {
                     tasks.firstChild.remove();
                 }
@@ -39,6 +40,7 @@ function refreshTaskList() {
                         taskDiv.id = task.taskid;
                         let startButton = document.createElement("button");
                         startButton.textContent = "Start";
+                        startButton.style.marginLeft = "auto";
                         taskDiv.appendChild(startButton);
                         startButton.addEventListener("click", () => {
                             taskID = startButton.parentElement.id;
@@ -50,7 +52,8 @@ function refreshTaskList() {
                             timer.style.display = "block";
                         });
                         let abandonButton = document.createElement("button");
-                        abandonButton.textContent = "Abandon";
+                        abandonButton.textContent = "X";
+                        abandonButton.style.marginLeft = "20px";
                         taskDiv.appendChild(abandonButton);
                         abandonButton.addEventListener("click", () => {
                             fetch("/close_task", {
@@ -66,7 +69,7 @@ function refreshTaskList() {
                                 if (response.status === 200) {
                                     refreshTaskList();
                                 } else {
-                                    // Error
+                                    tasksError.style.display = "inline";
                                 }
                             });
                         });
@@ -75,7 +78,7 @@ function refreshTaskList() {
                 }
             });
         } else {
-            // Error
+            tasksError.style.display = "inline";
         }
     })
 }
@@ -108,11 +111,12 @@ addButton.addEventListener("click", () => {
             if (response.status === 200) {
                 taskNameInput.value = "";
                 taskDescInput.value = "";
-                console.log("test");
                 refreshTaskList();
             } else {
-                // Error
+                tasksError.style.display = "inline";
             }
+        }).catch((error) => {
+            tasksError.style.display = "inline";
         })
     }
 });
