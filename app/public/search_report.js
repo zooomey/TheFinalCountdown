@@ -113,6 +113,7 @@ function refreshReport(){
 							task_cell.textContent = task.taskname;
 							var time_div = document.createElement("div");
 							time_cell.appendChild(time_div);
+							time_cell.setAttribute("style", "white-space: nowrap");
 
 							var time_width;
 							if (total_time === 0 || task.total === "0"){
@@ -157,9 +158,7 @@ function refreshReport(){
 								time_div.setAttribute("style", "background-color: #fff; padding: 5px");
 								time_div_table_cell1.textContent = "";
 							}
-
 					}
-
 				}
 			}).catch ((error) => {
 				console.log(error); //fetch crashed
