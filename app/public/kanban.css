@@ -39,19 +39,24 @@ ul {
   font-size: 17px;;
   margin: 0;
 }
+.drag-column-abandoned .drag-column-header,
+.drag-column-abandoned .is-moved,
+.drag-column-abandoned .drag-options {
+  background: #ea8c8c;
+}
 .drag-column-todo .drag-column-header,
 .drag-column-todo .is-moved,
 .drag-column-todo .drag-options {
-  background: #2A92BF;
+  background: #8cb8ea;
 }
 .drag-column-inprogress .drag-column-header,
 .drag-column-inprogress .is-moved,
 .drag-column-inprogress .drag-options {
-  background: #F4CE46;
+  background: #ffdb5b;
 }
-.drag-column-done .drag-column-header,
-.drag-column-done .is-moved,
-.drag-column-done .drag-options {
+.drag-column-completed .drag-column-header,
+.drag-column-completed .is-moved,
+.drag-column-completed .drag-options {
   background: #00B961;
 }
 
@@ -70,7 +75,7 @@ ul {
 .drag-item {
   padding: 5px;
   margin: 10px;
-  height: 100px;
+  height: 50px;
   border-radius: 0px 10px 10px 10px;
   background: rgba(0, 0, 0, 0.4);
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
