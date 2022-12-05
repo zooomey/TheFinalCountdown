@@ -267,6 +267,53 @@ app.post("/update_session", (req, res) => {
 });
 
 
+app.post("/update_tasks", (req, res) => {
+  // Tasks updated when the user drags div in kanban
+  let userid = req.body.userid;
+  let cookie = req.body.cookie;
+  let taskid = req.body.taskid;
+  let status = req.body.status;
+  let abandoned, inprogress, completed;
+
+  //console.log("UPDATE request : taskid ", taskid, " status: ", status);
+
+  if (status === "1"){ //abandoned
+    abandoned = true;
+    inprogress = false;
+    completed = false;
+  }
+  else if (status === "2"){ //todo
+    abandoned = false;
+    inprogress = false;
+    completed = false;
+  }
+  else if (status === "3"){ //inprogress
+    abandoned = false;
+    inprogress = true;
+    completed = false;
+  }
+  else if (status === "4"){ //completed
+    abandoned = false;
+    inprogress = false;
+    completed = true;
+  }
+
+  if (checkCookie(cookie, userid)){
+    if(userid && taskid) {
+      pool.query("UPDATE tasks SET abandoned = $1, inprogress = $2, completed = $3 WHERE taskid = $4", [abandoned, inprogress, completed, taskid]).then((result) => {res.send();
+      }).catch((error) => {
+        res.status(500).send();
+      });
+    } else {
+      res.status(400).send();
+    }
+  }
+  else{
+    res.status(400).send();
+  } //invalid cookie
+});
+
+
 app.post("/search/tasks", (req, res) => {
   let userid = req.body.userid;
   let cookie = req.body.cookie;
@@ -327,9 +374,6 @@ async function checkCookie(cookie, id){
     if (cookie === ''){
       return false;
     }
-    else if (sessionCookies.length == 0){
-      return false;
-    }
     else {
       let plaintext = sessionCookies[id].cookie;
 
@@ -346,12 +390,11 @@ async function checkCookie(cookie, id){
           return false;
         });
       return cookieBool;
-    } 
+    }
   } catch (error) {
     return false;
-  } 
+  }
 }
-
 
 
 app.listen(port, hostname, () => {
