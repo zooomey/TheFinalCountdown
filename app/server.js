@@ -193,7 +193,6 @@ app.post("/delete_task", (req, res) => {
   let userid = req.body.userid;
   let taskid = req.body.taskid;
   let cookie = req.body.cookie;
-  console.log(userid, taskid, cookie);
 
   if (checkCookie(cookie, userid)){
     if (taskid) {
@@ -277,8 +276,6 @@ app.post("/update_tasks", (req, res) => {
   let taskid = req.body.taskid;
   let status = req.body.status;
   let abandoned, inprogress, completed;
-
-  //console.log("UPDATE request : taskid ", taskid, " status: ", status);
 
   if (status === "1"){ //abandoned
     abandoned = true;
