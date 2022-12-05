@@ -241,6 +241,7 @@ input[type=number] {
 
 .footer {
 	position: fixed;
+	z-index:99;
   left: 0;
   bottom: 0;
 	height: 170px;
@@ -253,6 +254,7 @@ input[type=number] {
 
 .header {
 	position: fixed;
+	z-index:99;
 	width: 100%;
   top: 0;
 	height: 70px;
