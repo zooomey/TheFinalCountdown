@@ -10,9 +10,6 @@ let tasksError = document.getElementById("add_tasks_error");
 // For use in timer.js
 let taskID;
 
-//console.log("ID: ", cookie.id);
-//console.log("COOKIE: ", cookie.cookie);
-
 function refreshTaskList() {
     tasksError.style.display = "none";
     fetch("/search/tasks", {
@@ -116,13 +113,13 @@ addButton.addEventListener("click", () => {
                 taskNameInput.value = "";
                 taskDescInput.value = "";
                 refreshTaskList();
-                refreshKanban();
                 refreshReport();
+                refreshKanban();
             } else {
                 tasksError.style.display = "inline";
             }
         }).catch((error) => {
             tasksError.style.display = "inline";
-        })
+        });
     }
 });
