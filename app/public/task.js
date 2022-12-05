@@ -36,7 +36,11 @@ function refreshTaskList() {
                         taskDiv.className = "task";
                         let taskName = document.createElement("span");
                         taskName.textContent = task.taskname;
+                        taskName.setAttribute("style", "font-weight: bold");
                         taskDiv.appendChild(taskName);
+                        let taskDescription = document.createElement("span");
+                        taskDiv.appendChild(taskDescription);
+                        taskDescription.textContent = " : " + task.description;
                         taskDiv.id = task.taskid;
                         let startButton = document.createElement("button");
                         startButton.textContent = "Start";
