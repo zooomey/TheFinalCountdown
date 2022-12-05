@@ -116,6 +116,8 @@ addButton.addEventListener("click", () => {
                 taskNameInput.value = "";
                 taskDescInput.value = "";
                 refreshTaskList();
+                refreshKanban();
+                refreshReport();
             } else {
                 tasksError.style.display = "inline";
             }
