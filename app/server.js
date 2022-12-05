@@ -327,6 +327,9 @@ async function checkCookie(cookie, id){
     if (cookie === ''){
       return false;
     }
+    else if (sessionCookies.length == 0){
+      return false;
+    }
     else {
       let plaintext = sessionCookies[id].cookie;
 
@@ -346,8 +349,9 @@ async function checkCookie(cookie, id){
     } 
   } catch (error) {
     return false;
-  }
+  } 
 }
+
 
 
 app.listen(port, hostname, () => {
