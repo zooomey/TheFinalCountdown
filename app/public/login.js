@@ -23,7 +23,7 @@ if (document.cookie){ // stay signed in
 	if (name) {
 		var l = document.createElement('a');
 		signout.appendChild(l);
-		l.setAttribute('href', ''); // <======= load sign out / goodbye page
+		//l.setAttribute('href', ''); // <======= load sign out / goodbye page
 		l.setAttribute('style', 'font-size: 15px');
 		l.textContent = " (SIGN OUT) ";
 
@@ -59,7 +59,7 @@ login.addEventListener("click", () => {
 
 					var dash = document.createElement('a');
 					nav.appendChild(dash);
-					dash.setAttribute('href', ''); // <======= load user dashboard / kanban
+					//dash.setAttribute('href', ''); // <======= load user dashboard / kanban
 
 					result.classList.remove("error");
 					console.log("Login successful. Welcome ", data.username);
@@ -67,14 +67,14 @@ login.addEventListener("click", () => {
 					if (alreadySignedIn !== true){
 						var l = document.createElement('a');
 						signout.appendChild(l);
-						l.setAttribute('href', ''); // <======= load sign out / goodbye page
-						l.setAttribute('style', 'font-size: 15px');
+						//l.setAttribute('href', ''); // <======= load sign out / goodbye page
+						l.setAttribute('style', 'font-size: 15px;');
 						l.textContent = " (SIGN OUT) ";
 					}
 
 					location.reload();
 
-					document.getElementById("addtasks").style.display = "block";
+					//document.getElementById("addtasks").style.display = "block";
 					refreshTaskList();
 
 				} else {
