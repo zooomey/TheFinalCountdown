@@ -120,7 +120,7 @@ startButton.addEventListener("click", () => {
                     response.json().then((body) => {
                         timerError.textContent = "";
                         sessionID = body.sessionID;
-    
+
                         let hourString = String(Math.floor(timeLimit / 3600)).padStart(2, "0");
                         let minuteString = String(Math.floor((timeLimit % 3600) / 60)).padStart(2, "0");
                         let secondString = String(timeLimit % 60).padStart(2, "0");
@@ -129,7 +129,7 @@ startButton.addEventListener("click", () => {
                         secondDisplay.textContent = secondString;
                         document.title = `${hourString}:${minuteString}:${secondString}`;
                         displayTime = 0;
-    
+
                         timerId = setInterval(() => {
                             if (!isPaused) {
                                 displayTime++;
@@ -154,6 +154,7 @@ startButton.addEventListener("click", () => {
                                             "Content-Type": "application/json"
                                         },
                                         body: JSON.stringify({
+																						taskid: Number(taskID),
                                             sessionid: sessionID,
                                             seconds: displayTime,
                                             date: Date.now() / 1000,
@@ -180,7 +181,7 @@ startButton.addEventListener("click", () => {
                                 }
                             }
                         }, 1000);
-    
+
                         hourInput.style.display = "none";
                         minuteInput.style.display = "none";
                         secondInput.style.display = "none";
@@ -213,6 +214,7 @@ pauseButton.addEventListener("click", () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
+										taskid: Number(taskID),
                     sessionid: sessionID,
                     seconds: displayTime,
                     date: Date.now() / 1000,
@@ -244,6 +246,7 @@ stopButton.addEventListener("click", () => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
+						taskid: Number(taskID),
             sessionid: sessionID,
             seconds: displayTime,
             date: Date.now() / 1000,
@@ -259,6 +262,8 @@ stopButton.addEventListener("click", () => {
             pauseButton.textContent = "Resume";
             timerError.textContent = "Error connecting to server";
         }
+				refreshReport();
+	      refreshKanban();
     }).catch((error) => {
         isPaused = true;
         pauseButton.textContent = "Resume";
