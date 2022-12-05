@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>The Final Countdown</title>
-<link rel="icon" type=”image/png” href="/img/newlogooo.ico"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="main.css">
 <link rel="stylesheet" href="kanban.css">
@@ -121,16 +120,20 @@
 
         <div class="drag-container">
         	<ul class="drag-list">
-        		<li class="drag-column drag-column-todo">
+            <li class="drag-column drag-column-abandoned">
+              <span class="drag-column-header">
+                <h2>ABANDONED</h2>
+              </span>
+              <div class="drag-options" id="abandoned"></div>
+              <ul class="drag-inner-list" id="1">
+              </ul>
+            </li>
+            <li class="drag-column drag-column-todo">
         			<span class="drag-column-header">
         				<h2>TO DO</h2>
         			</span>
         			<div class="drag-options" id="todo"></div>
-        			<ul class="drag-inner-list" id="1">
-        				<li class="drag-item"><h3>TEST</h3><p>test description</p></li>
-                <li class="drag-item"><h3>TEST</h3><p>test description</p></li>
-                <li class="drag-item"><h3>TEST</h3><p>test description</p></li>
-
+        			<ul class="drag-inner-list" id="2">
         			</ul>
         		</li>
         		<li class="drag-column drag-column-inprogress">
@@ -138,22 +141,15 @@
         				<h2>IN PROGRESS</h2>
         				</span>
         			<div class="drag-options" id="inprogress"></div>
-        			<ul class="drag-inner-list" id="2">
-                <li class="drag-item"><h3>TEST</h3><p>test description</p></li>
-                <li class="drag-item"><h3>TEST</h3><p>test description</p></li>
-                <li class="drag-item"><h3>TEST</h3><p>test description</p></li>
-                <li class="drag-item"><h3>TEST</h3><p>test description</p></li>
+        			<ul class="drag-inner-list" id="3">
         			</ul>
         		</li>
-        		<li class="drag-column drag-column-done">
+        		<li class="drag-column drag-column-completed">
         			<span class="drag-column-header">
         				<h2>DONE</h2>
               </span>
-        			<div class="drag-options" id="done"></div>
-        			<ul class="drag-inner-list" id="3">
-                <li class="drag-item"><h3>TEST</h3><p>test description</p></li>
-                <li class="drag-item"><h3>TEST</h3><p>test description</p></li>
-
+        			<div class="drag-options" id="completed"></div>
+        			<ul class="drag-inner-list" id="4">
         			</ul>
         		</li>
         	</ul>
@@ -167,21 +163,11 @@
 
       <div class="home" id="report">
         <div class="divTitle"><table width="100%"><tr><td><h2>Report</h2></td><td align="right"><span class="divClose" id="close_report">&times;</span></td></tr></table></div>
-
-        <div>
-        </div>
+        <br/><br/>
+        <div id="task_report"></div>
+        <div id="session_report"></div>
       </div>
 
-      <!-- ********************************************************* -->
-
-      <div id="reports" class="home">
-        <h2>
-          User Statistics
-        </h2>
-        <p><button id="generate">Generate Report</button></p>
-        <div id="report_title"></div>
-        <div id="report"></div>
-      </div>
 
       <!-- ********************************************************* -->
 
@@ -196,14 +182,14 @@
             <li>You must create an account and sign-in to view task management options.</li>
             <li style="list-style: none"><table><tr><td style="padding: 10px"><img src="img/drag_img.png" height="110px" width="77px"></td><td style="padding: 10px; vertical-align: top">
               <br/>
-              <ul><li>You may customize your landing page by dragging widgets around the page. The icons at the top right corner will open particular widgets. Clicking the home icon will reset to defaults.</li></ul>
+              <ul><li>You may customize your landing page by dragging widgets around the page. The icons at the top right corner will open/reopen particular widgets. Clicking the home icon will refresh all widgets.</li></ul>
             </td></tr></table></li>
             <br/>
             <li>The + button opens the Add Tasks widget where you can create new tasks. Once you've added a new task you must click START which will open the Timer widget to begin tracking work time.</li>
             <br/>
             <li>The Timer is set to cycle between 25 minute work time and 5 minute break time. You can customize the time settings before clicking START to begin the timer. Clicking the timer icon or X will hide the widget, but the timer will continue to run until you press STOP. While the timer is running, the time is also displayed in the browser tab next to the favicon.</li>
             <br/>
-            <li>Kanban...</li>
+            <li>Kanban</li>
             <br/>
             <li>User Reports...</li>
         </ul>
@@ -257,6 +243,7 @@
       </td></tr></table>
       </div>
 
+
       <!-- ********************************************************* -->
 </div>
 
@@ -268,7 +255,7 @@
 <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js'></script> <!-- Dragula JS -->
 <script src="interface.js"></script>
 <script src="kanban.js"></script>
-<script src="search_report.js"></script><
+<script src="search_report.js"></script>
 
 </body>
 </html>
