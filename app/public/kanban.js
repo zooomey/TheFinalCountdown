@@ -1,4 +1,4 @@
-//let trashcans = document.getElementsByClassName("delete_img");
+
 function refreshKanban() {
   if (cookie){
     fetch("/search/tasks", {
@@ -13,36 +13,36 @@ function refreshKanban() {
 		}).then((response) => response.json())
 			.then((data) => {
 				if (data.status === 200) {
-          document.getElementById('1').textContent="";
-          document.getElementById('2').textContent="";
-          document.getElementById('3').textContent="";
-          document.getElementById('4').textContent="";
+          let abandoned = document.getElementById('1');
+          abandoned.textContent = "";
+          let todo = document.getElementById('2');
+          todo.textContent = "";
+          let inprogress = document.getElementById('3')
+          inprogress.textContent = "";
+          let completed = document.getElementById('4')
+          completed.textContent = "";
 
           // INSERT TASKS INTO TO-DO / IN-PROGRESS / COMPLETED DIVS
           for (task of data.rows) {
             if(task.abandoned){
-              let abandoned = document.getElementById('1');
               var li = document.createElement("li");
-              li.setAttribute("class", "drag-item " + task.taskid + " abandoned");
               var x = abandoned.appendChild(li);
+              li.setAttribute("class", "drag-item " + task.taskid + " abandoned");
             }
             else if(task.inprogress) {
-              let inprogress = document.getElementById('3');
               var li = document.createElement("li");
-              li.setAttribute("class", "drag-item " + task.taskid + " inprogress");
               var x = inprogress.appendChild(li);
+              li.setAttribute("class", "drag-item " + task.taskid + " inprogress");
             }
             else if(task.completed) {
-              let completed = document.getElementById('4');
               var li = document.createElement("li");
-              li.setAttribute("class", "drag-item " + task.taskid + " completed");
               var x = completed.appendChild(li);
+              li.setAttribute("class", "drag-item " + task.taskid + " completed");
             }
             else {
-              let todo = document.getElementById('2');
               var li = document.createElement("li");
-              li.setAttribute("class", "drag-item " + task.taskid + " todo");
               var x = todo.appendChild(li);
+              li.setAttribute("class", "drag-item " + task.taskid + " todo");
             }
 
             var table = document.createElement("table");
@@ -66,46 +66,46 @@ function refreshKanban() {
         }
       });
   }
-
-  dragula([
-  	document.getElementById('1'),
-  	document.getElementById('2'),
-  	document.getElementById('3'),
-    document.getElementById('4')
-  ])
-
-  .on('drag', function(el) {
-  	// add 'is-moving' class to element being dragged
-  	el.classList.add('is-moving');
-  })
-  .on('dragend', function(el) {
-  	// remove 'is-moving' class from element after dragging has stopped
-  	el.classList.remove('is-moving');
-  	// add the 'is-moved' class for 600ms then remove it
-  	window.setTimeout(function() {
-  		el.classList.add('is-moved');
-      //console.log("MOVED : taskid ", el.classList[1], " status: ", el.parentElement.id); //taskid
-      fetch("/update_tasks", { //send updates
-  			method: "POST",
-  			headers: {
-  				"Content-Type": "application/json"
-  			},
-  			body: JSON.stringify({
-  				userid: cookie.id,
-  				cookie: cookie.cookie,
-          taskid: el.classList[1],
-          status: el.parentElement.id
-  			})
-  		}).then((response) => {
-          refreshReport();
-        });
-
-      window.setTimeout(function() {
-  			el.classList.remove('is-moved');
-  		}, 600);
-  	}, 100);
-  });
 }
+
+dragula([
+  document.getElementById('1'),
+  document.getElementById('2'),
+  document.getElementById('3'),
+  document.getElementById('4')
+])
+
+.on('drag', function(el) {
+  // add 'is-moving' class to element being dragged
+  el.classList.add('is-moving');
+})
+.on('dragend', function(el) {
+  // remove 'is-moving' class from element after dragging has stopped
+  el.classList.remove('is-moving');
+  // add the 'is-moved' class for 600ms then remove it
+  window.setTimeout(function() {
+    el.classList.add('is-moved');
+    //console.log("MOVED : taskid ", el.classList[1], " status: ", el.parentElement.id); //taskid
+    fetch("/update_tasks", { //send updates
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userid: cookie.id,
+        cookie: cookie.cookie,
+        taskid: el.classList[1],
+        status: el.parentElement.id
+      })
+    }).then((response) => {
+        refreshReport();
+      });
+
+    window.setTimeout(function() {
+      el.classList.remove('is-moved');
+    }, 600);
+  }, 100);
+});
 
 if (alreadySignedIn) {
     refreshKanban();
@@ -123,9 +123,8 @@ function delete_task(taskID){
       taskid: taskID
     })
   }).then((response) => {
-    //console.log("PERMANENTLY DELETED");
       refreshReport();
-      refreshKanban();
       refreshTaskList();
+      refreshKanban();
     });
 }
