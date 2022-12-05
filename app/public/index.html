@@ -9,7 +9,268 @@
 <body>
 
 
+<div id="mySidenav" class="sidenav"><!DOCTYPE html>
+<html>
+<head>
+<title>The Final Countdown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="kanban.css">
+</head>
+<body>
+
+
 <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" id="closebtn" onclick="closeNav()">&times;</a>
+	<div id="main">
+    <h1>The Final Countdown</h1><br/>
+    <div id="NAV" class="centered">
+      <div>
+  			<h2 id="NAV_title">Log in</h2>
+  			<table>
+  				<tr>
+  					<td><label name="username" for="username">Username:</label></td>
+  					<td><input type="text" id="username"></td>
+  				</tr>
+  				<tr>
+  					<td><label name="password" for="password">Password:</label></td>
+  					<td><input type="password" id="password"></td>
+  				</tr>
+  			</table>
+  			<button id="login_button" class="button button1">Log in</button>
+  			<div id="result">&nbsp;</div>
+  		</div>
+      <p><span id="login_nav_text">Need an account? Create an account </span><a id="swap_nav" class="create_nav">here</a>.</p>
+    </div>
+	</div>
+  <br/><br/><img src="img/THE_FINAL__1_-removebg-preview.png">
+</div>
+
+<div class="header">
+  <table width="100%"><tr><td align="left">
+  	<span style="font-size:30px;cursor:pointer" onclick="openNav()"> &nbsp; &nbsp; &#9776; </span>
+    <span id="SIGNIN" style="font-size:30px;cursor:pointer" onclick="openNav()">SIGN IN</span> &nbsp; &nbsp; &nbsp; <span id="SIGNOUT"></span>
+  </td><td></td><td width="70px">
+    <span id="home_icon"><img src="img/home_icon.png" class="icon" alt="Home" title="Home"></span>
+  </td><td  width="70px">
+    <span id="add_icon"><img src="img/add_icon.png" class="icon" alt="Add Tasks" title="Add Tasks"></span>
+  </td><td width="70px">
+    <span id="timer_icon"><img src="img/timer_icon.png" class="icon" alt="Timer" title="Timer"></span>
+  </td><td  width="70px">
+    <span id="kanban_icon"><img src="img/kanban_icon.png" class="icon" alt="Kanban" title="Kanban"></span>
+  </td><td  width="70px">
+    <span id="report_icon"><img src="img/report_icon.png" class="icon" alt="User Report" title="User Report"></span>
+  </td><td  width="70px">
+    <span id="help_icon"><img src="img/help_icon.png" class="icon" alt="Help" title="Help"></span>
+  </td></tr></table>
+</div>
+
+
+<div id="gridDiv" class="board">
+      <!-- ********************************************************* -->
+
+
+      <div id="timer" class="home">
+        <div class="divTitle"><table width="100%"><tr><td><h2>Timer</h2></td><td align="right"><span class="divClose" id="close_timer">&times;</span></td></tr></table></div>
+
+        <div id="timer_task_name" class="timer_title"></div>
+        <div id="timer_break_label" class="timer_title">Break</div>
+        <input type="text" class="timer_input" id="input_hours" placeholder="h" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+        <span id="display_hours" class="timer_text"></span>
+        <span class="timer_text">:</span>
+        <input type="text" class="timer_input" id="input_minutes" placeholder="m" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+        <span id="display_minutes" class="timer_text"></span>
+        <span class="timer_text">:</span>
+        <input type="text" class="timer_input" id="input_seconds" placeholder="s" maxlength="2" onkeydown="restrictInput(this)" onkeyup="restrictInput(this)">
+        <span id="display_seconds" class="timer_text"></span>
+        <div></div>
+        <button id="timer_start" class="timer_button">Start</button>
+        <button id="timer_break" class="timer_button">Break</button>
+        <button id="timer_pause" class="timer_button">Pause</button>
+        <button id="timer_stop" class="timer_button">Stop</button>
+        <span id="timer_error"></span>
+      </div>
+
+
+      <!-- ********************************************************* -->
+
+
+      <div class="home" id="addtasks">
+        <div class="divTitle"><table width="100%"><tr><td><h2>Add a New Task:</h2></td><td align="right"><span class="divClose" id="close_add">&times;</span></td></tr></table></div>
+
+        <div id="newtask">
+            <input id="task_name" type="text" placeholder="Task Name">
+            <input id="task_desc" type="text" placeholder="Task Description">
+            <br>
+            <label for="estimate">Time Estimate (Minutes):</label>
+
+            <select name="estimate" id="estimate">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="20">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+              <option value="60">60</option>
+              <option value="70">70</option>
+              <option value="80">80</option>
+              <option value="90">90</option>
+              <option value="100">100</option>
+            </select>
+
+            <button id="push">Add</button>
+        </div>
+        <div id="add_tasks_error">Error connecting to server.</div>
+        <div id="tasks"></div>
+      </div>
+
+
+      <!-- ********************************************************* -->
+
+      <div class="home" id="kanban">
+        <div class="divTitle"><table width="100%"><tr><td><h2>Kanban</h2></td><td align="right"><span class="divClose" id="close_kanban">&times;</span></td></tr></table></div>
+
+        <div class="drag-container">
+        	<ul class="drag-list">
+            <li class="drag-column drag-column-abandoned">
+              <span class="drag-column-header">
+                <h2>ABANDONED</h2>
+              </span>
+              <div class="drag-options" id="abandoned"></div>
+              <ul class="drag-inner-list" id="1">
+              </ul>
+            </li>
+            <li class="drag-column drag-column-todo">
+        			<span class="drag-column-header">
+        				<h2>TO DO</h2>
+        			</span>
+        			<div class="drag-options" id="todo"></div>
+        			<ul class="drag-inner-list" id="2">
+        			</ul>
+        		</li>
+        		<li class="drag-column drag-column-inprogress">
+        			<span class="drag-column-header">
+        				<h2>IN PROGRESS</h2>
+        				</span>
+        			<div class="drag-options" id="inprogress"></div>
+        			<ul class="drag-inner-list" id="3">
+        			</ul>
+        		</li>
+        		<li class="drag-column drag-column-completed">
+        			<span class="drag-column-header">
+        				<h2>DONE</h2>
+              </span>
+        			<div class="drag-options" id="completed"></div>
+        			<ul class="drag-inner-list" id="4">
+        			</ul>
+        		</li>
+        	</ul>
+        </div>
+
+      </div>
+
+
+      <!-- ********************************************************* -->
+
+
+      <div class="home" id="report">
+        <div class="divTitle"><table width="100%"><tr><td><h2>Report</h2></td><td align="right"><span class="divClose" id="close_report">&times;</span></td></tr></table></div>
+        <br/><br/>
+        <div id="task_report"></div>
+        <div id="session_report"></div>
+      </div>
+
+
+      <!-- ********************************************************* -->
+
+
+      <div class="home" id="faq" style="display: none">
+        <div class="divTitle"><table width="100%"><tr><td><h2>FAQ</h2></td><td align="right"><span class="divClose" id="close_faq">&times;</span></td></tr></table></div>
+        <br/><table><tr><td>
+        <ol>
+          <li><h3>How do I use this website?</h3></li>
+          <br/>
+          <ul style="list-style-type: square; padding-left:30px; line-height: 1.5">
+            <li>You must create an account and sign-in to view task management options.</li>
+            <li style="list-style: none"><table><tr><td style="padding: 10px"><img src="img/drag_img.png" height="110px" width="77px"></td><td style="padding: 10px; vertical-align: top">
+              <br/>
+              <ul><li>You may customize your landing page by dragging widgets around the page. The icons at the top right corner will open/reopen particular widgets. Clicking the home icon will refresh all widgets.</li></ul>
+            </td></tr></table></li>
+            <br/>
+            <li>The + button opens the Add Tasks widget where you can create new tasks. Once you've added a new task you must click START which will open the Timer widget to begin tracking work time.</li>
+            <br/>
+            <li>The Timer is set to cycle between 25 minute work time and 5 minute break time. You can customize the time settings before clicking START to begin the timer. Clicking the timer icon or X will hide the widget, but the timer will continue to run until you press STOP. While the timer is running, the time is also displayed in the browser tab next to the favicon.</li>
+            <br/>
+            <li>Kanban</li>
+            <br/>
+            <li>User Reports...</li>
+        </ul>
+
+
+          <br/><br/><br/>
+          <li><h3>What is the Pomodoro Technique?</h3></li>
+          <br/>Read more about it here: <br/><br/>
+            <ul style="list-style-type: square; padding-left:30px; line-height: 1.5">
+              <li><a src="https://todoist.com/productivity-methods/pomodoro-technique"><b>The Pomodoro Technique</b> by Laura Scroggs</a></li>
+              <li><a src="https://en.wikipedia.org/wiki/Pomodoro_Technique"><b>Pomodoro Technique</b></a> Wiki</li>
+              <li><a src="https://www.lifehack.org/articles/productivity/the-pomodoro-technique-is-it-right-for-you.html"><b>Does the Pomodoro Technique Work for Your Productivity?</b> by Tucker Cummings</a></li>
+              <li><a src="https://www.forbes.com/sites/bryancollinseurope/2020/03/03/the-pomodoro-technique/?sh=f2e7fee39857"><b>The Pomodoro Technique Explained</b> Bryan Collins</a></li>
+              <li><a src="https://youtu.be/1pADI_eZ_-U"><b>What is Pomodoro Technique | Explained in 2 min</b></a> by Productivity Guy</li>
+              <li><a src="https://smartphones.gadgethacks.com/how-to/tried-5-different-pomodoro-apps-over-5-days-heres-which-helped-me-get-most-done-0203816/"><b>I Tried 5 Different Pomodoro Apps Over 5 Days</b></a> by Jake Peterson</li>
+            </ul>
+          </ol>
+      </td></tr><tr>
+      <td><br/>
+      </td></tr></table>
+      </div>
+
+
+      <div class="home" id="info_1">
+        <div class="divTitle"><table width="100%"><tr><td><h2>Pomodoro Technique</h2></td><td align="right"><span class="divClose" id="close_info">&times;</span></td></tr></table></div>
+        by <a href="https://www.techtarget.com/whatis/definition/pomodoro-technique" target="_blank">Robert Sheldon & Ivy Wigmore</a>
+      <br/><br/>
+      <table><tr><td>
+      <p>
+        The Pomodoro Technique is a time management method based on 25-minute stretches of focused work broken by five-minute breaks. Longer breaks, typically 15 to 30 minutes, are taken after four consecutive work intervals. Each work interval is called a pomodoro, the Italian word for tomato (plural: pomodori).
+      </p><br><p>
+        Developer and entrepreneur Francesco Cirillo created the Pomodoro Technique in the late 1980s, when he was a university student and used a tomato-shaped kitchen timer to organize his study schedule. At first, he experimented with different work intervals, starting with two minutes and extending them up to one hour; he quickly realized that these were getting too long to stay focused on a task. He settled on 25-minute pomodori as the optimal time for his needs.
+      </p><br><p>
+        From this experience, Cirillo recognized that time could be turned into an ally, rather than a source of anxiety. The Pomodoro Technique essentially trains people to focus on tasks better by limiting the length of time they attempt to maintain that focus and ensuring restorative breaks from the effort. The method also helps them overcome their tendencies to procrastinate or multitask, both of which are known to impair productivity.
+        </p>
+      </td></tr><tr>
+      <td><br/><img src="https://qph.cf2.quoracdn.net/main-qimg-69bf0c447faf7322f403cb2499f2a9c4-pjlq" width="600px">
+      </td></tr></table>
+
+      </div>
+
+
+      <!-- ********************************************************* -->
+
+      <div id="playlist" class="footer">
+        <table style="width: 100%"><tr><td style="width: 140px; vertical-align: top; text-align: center"><img src="img/FC_logo_white.png" height="140px"></td><td>
+
+      	<!-- TODO: Replace iframe -->
+      	<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/64rWSKJM87x39duTwqeEwo?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+      </td></tr></table>
+      </div>
+
+
+      <!-- ********************************************************* -->
+</div>
+
+
+<script src="login.js"></script>
+<script src="timer.js"></script>
+<script src="task.js"></script>
+<script src="https://sortablejs.github.io/Sortable/Sortable.js"></script> <!-- SortableJS JavaScript library -->
+<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js'></script> <!-- Dragula JS -->
+<script src="interface.js"></script>
+<script src="kanban.js"></script>
+<script src="search_report.js"></script>
+
+</body>
+</html>
+
   <a href="javascript:void(0)" id="closebtn" onclick="closeNav()">&times;</a>
 	<div id="main">
     <h1>The Final Countdown</h1><br/>
