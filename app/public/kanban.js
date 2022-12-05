@@ -1,15 +1,12 @@
-let todo = document.getElementById("todo");
-let inprogress = document.getElementById("inprogress");
-let done = document.getElementById("done");
 
-  if (userID){
+  if (cookie){
     fetch("/search/tasks", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
-				userid: userID,
+				userid: cookie.id,
 				cookie: cookie.cookie
 			})
 		}).then((response) => response.json())
@@ -25,3 +22,28 @@ let done = document.getElementById("done");
         }
       });
   }
+
+  dragula([
+  	document.getElementById('1'),
+  	document.getElementById('2'),
+  	document.getElementById('3'),
+  ])
+
+  .on('drag', function(el) {
+
+  	// add 'is-moving' class to element being dragged
+  	el.classList.add('is-moving');
+  })
+  .on('dragend', function(el) {
+
+  	// remove 'is-moving' class from element after dragging has stopped
+  	el.classList.remove('is-moving');
+
+  	// add the 'is-moved' class for 600ms then remove it
+  	window.setTimeout(function() {
+  		el.classList.add('is-moved');
+  		window.setTimeout(function() {
+  			el.classList.remove('is-moved');
+  		}, 600);
+  	}, 100);
+  });
