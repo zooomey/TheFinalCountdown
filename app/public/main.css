@@ -25,8 +25,14 @@ a:hover {
 	text-decoration: none;
 	font-weight: bold;
 }
-a:link { text-decoration: none; }
-a:visited { text-decoration: none; }
+a:link {
+	text-decoration: none;
+	color: #bd6c4c;
+}
+a:visited {
+	text-decoration: none;
+	color: #bd6c4c;
+}
 a:active { text-decoration: none; }
 h1 {
 	font-family: powerdark;
@@ -86,7 +92,7 @@ input[type=number] {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   top: 0;
   left: 0;
   background-color: #ffffff;
@@ -316,4 +322,8 @@ input[type=number] {
   width: 70px;
   border-radius: 5px;
   font-family: 'Poppins',sans-serif;
+}
+.delete_img {
+	width: 30px;
+	height: 30px;
 }
