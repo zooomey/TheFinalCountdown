@@ -23,9 +23,7 @@ let show_faq = false;
 let show_info = true;
 //*********************************************************
 
-if (alreadySignedIn) {
-    refreshTaskList();
-} else {
+if (!alreadySignedIn) {
     addtasks.style.display = "none";
 		timer.style.display = "none";
 		report.style.display = "none";
