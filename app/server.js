@@ -189,19 +189,19 @@ app.post("/close_task", (req, res) => {
 
 
 app.post("/delete_task", (req, res) => {
-  let taskID = req.body.taskID;
+  // Tasks updated when the user deletes from kanban
+  let userid = req.body.userid;
+  let taskid = req.body.taskid;
   let cookie = req.body.cookie;
+  console.log(userid, taskid, cookie);
 
   if (checkCookie(cookie, userid)){
-    if (taskID) {
-      pool.query("DELETE FROM sessions WHERE taskid = $1", [taskID]).then((result) => {
-        pool.query("DELETE FROM tasks WHERE taskid = $1", [taskID]).then((result) => {
-          res.send();
+    if (taskid) {
+      pool.query("DELETE FROM sessions WHERE taskid = $1", [taskid]);
+      pool.query("DELETE FROM tasks WHERE taskid = $1", [taskid]).then((result) => {
+          res.status(200).send();
         }).catch((error) => {
           res.status(500).send();
-        });
-      }).catch((error) => {
-        res.status(500).send();
       });
     } else {
       res.status(400).send();
@@ -244,6 +244,7 @@ CREATE TABLE sessions (
 
 app.post("/update_session", (req, res) => {
   // Session is updated when the timer resumes/stops/finishes or a minute passes on the timer
+  let taskid = req.body.taskid;
   let sessionid = req.body.sessionid;
   let seconds = req.body.seconds;
   let date = req.body.date;
@@ -252,6 +253,8 @@ app.post("/update_session", (req, res) => {
 
   if (checkCookie(cookie, userid)){
     if(sessionid && seconds && date) {
+      pool.query("UPDATE tasks SET total = total + $1, abandoned = false, inprogress = true, completed = false WHERE taskid = $2", [seconds, taskid]);
+
       pool.query("UPDATE sessions SET seconds = $1, stop_date = to_timestamp($2) WHERE sessionid = $3", [seconds, date, sessionid]).then((result) => {
         res.send();
       }).catch((error) => {
