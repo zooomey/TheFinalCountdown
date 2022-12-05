@@ -132,6 +132,10 @@ report_icon.addEventListener("click", () => {
 help_icon.addEventListener("click", () => {
   faq.style.display = "block";
   info_1.style.display = "block";
+  kanban.style.display = "none";
+  report.style.display = "none";
+  timer.style.display = "none";
+  addtasks.style.display = "none";
   show_faq = true;
   show_info = true;
 });
