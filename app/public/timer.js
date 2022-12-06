@@ -36,6 +36,8 @@ function resetTimer() {
     breakButton.style.display = "none";
     timerBreakLabel.style.display = "none";
     timerTaskName.style.display = "block";
+    refreshReport();
+	refreshKanban();
 }
 
 hourDisplay.style.display = "none";
@@ -154,7 +156,7 @@ startButton.addEventListener("click", () => {
                                             "Content-Type": "application/json"
                                         },
                                         body: JSON.stringify({
-																						taskid: Number(taskID),
+											taskid: Number(taskID),
                                             sessionid: sessionID,
                                             seconds: displayTime,
                                             date: Date.now() / 1000,
@@ -214,7 +216,7 @@ pauseButton.addEventListener("click", () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-										taskid: Number(taskID),
+					taskid: Number(taskID),
                     sessionid: sessionID,
                     seconds: displayTime,
                     date: Date.now() / 1000,
@@ -246,7 +248,7 @@ stopButton.addEventListener("click", () => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-						taskid: Number(taskID),
+			taskid: Number(taskID),
             sessionid: sessionID,
             seconds: displayTime,
             date: Date.now() / 1000,
@@ -262,8 +264,6 @@ stopButton.addEventListener("click", () => {
             pauseButton.textContent = "Resume";
             timerError.textContent = "Error connecting to server";
         }
-				refreshReport();
-	      refreshKanban();
     }).catch((error) => {
         isPaused = true;
         pauseButton.textContent = "Resume";

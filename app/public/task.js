@@ -28,7 +28,7 @@ function refreshTaskList() {
                     tasks.firstChild.remove();
                 }
                 for (task of body.rows) {
-                    if (!task.abandoned) {//task.inprogress) {
+                    if (task.inprogress) {
                         let taskDiv = document.createElement("div");
                         taskDiv.className = "task";
                         let taskName = document.createElement("span");
@@ -51,28 +51,6 @@ function refreshTaskList() {
                             minuteInput.value = "25";
                             secondInput.value = "00";
                             timer.style.display = "block";
-                        });
-                        let abandonButton = document.createElement("button");
-                        abandonButton.textContent = "X";
-                        abandonButton.style.marginLeft = "20px";
-                        taskDiv.appendChild(abandonButton);
-                        abandonButton.addEventListener("click", () => {
-                            fetch("/close_task", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json"
-                                },
-                                body: JSON.stringify({
-                                    taskID: abandonButton.parentElement.id,
-                                    status: "abandoned"
-                                })
-                            }).then((response) => {
-                                if (response.status === 200) {
-                                    refreshTaskList();
-                                } else {
-                                    tasksError.style.display = "inline";
-                                }
-                            });
                         });
                         tasks.appendChild(taskDiv);
                     }
@@ -105,7 +83,7 @@ addButton.addEventListener("click", () => {
                 userid: cookie.id,
                 taskname: taskNameInput.value,
                 description: taskDescInput.value,
-                estimate: estimateInput.value,
+                estimate: Number(estimateInput.value) * 60,
                 cookie: cookie.cookie
             })
         }).then((response) => {

@@ -32,7 +32,7 @@ pool.connect().then(() => {
             let tasks = [
               [userid, "MATH130 problems",         "Three page paper for ENGL103 due next week", 2400, 0,     false, false, false],
               [userid, "Update resume",            "Add new skills",                             1200, 0,     false, false, false],
-              [userid, "ENG125 paper",             "Four page paper",                            6000, 3600,  true,  false, false],
+              [userid, "ENGL125 paper",            "Four page paper",                            6000, 3600,  true,  false, false],
               [userid, "PHIL210 discussion board", "Respond to two posts",                       2400, 1800,  true,  false, false],
               [userid, "ENGL103 paper",            "Three page paper on the reading",            5400, 6300,  false, true,  false],
               [userid, "MATH130 reading",          "Chapters 6, 7",                              1800, 1200,  false, true,  false],
@@ -318,10 +318,16 @@ app.post("/update_session", (req, res) => {
 
   if (checkCookie(cookie, userid)){
     if(sessionid && seconds && date) {
-      pool.query("UPDATE tasks SET total = total + $1, abandoned = false, inprogress = true, completed = false WHERE taskid = $2", [seconds, taskid]);
-
       pool.query("UPDATE sessions SET seconds = $1, stop_date = to_timestamp($2) WHERE sessionid = $3", [seconds, date, sessionid]).then((result) => {
-        res.send();
+        pool.query("SELECT SUM(seconds) FROM sessions WHERE taskid = $1", [taskid]).then((sumSec) => {
+          pool.query("UPDATE tasks SET total = $1 WHERE taskid = $2", [sumSec.rows[0].sum, taskid]).then(() => {
+            res.send();
+          }).catch((error) => {
+            res.status(500).send();
+          })
+        }).catch((error) => {
+          res.status(500).send();
+        })
       }).catch((error) => {
         res.status(500).send();
       });

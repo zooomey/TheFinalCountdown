@@ -99,6 +99,7 @@ dragula([
       })
     }).then((response) => {
         refreshReport();
+        refreshTaskList();
       });
 
     window.setTimeout(function() {

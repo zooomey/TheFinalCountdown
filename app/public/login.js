@@ -115,9 +115,7 @@ login.addEventListener("click", () => {
 signout.addEventListener("click", () => {
 	console.log("SIGNING OUT");
 	document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; //delete cookie
-
-	nav.textContent = "SIGN IN";
-	signout.textContent = "";
+	location.reload();
 });
 
 

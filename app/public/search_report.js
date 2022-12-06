@@ -205,26 +205,10 @@ if (alreadySignedIn) {
 
 function convertSeconds(seconds){
 	var ConvertedTime = new Object();
-	var hrs, mins, secs;
 
-	if (seconds < 60){
-		hrs = 0;
-		mins = 0;
-		secs = seconds;
-	}
-	else if (seconds < 3600){
-		hrs = 0;
-		mins = Math.floor(seconds / 60);
-		secs = seconds - (mins * 60) - (mins % 60);
-	}
-	else{
-		hrs = Math.floor(seconds / 3600);
-		mins = Math.floor((seconds - (hrs * 3600)) / 60);
-		secs =  seconds - (hrs * 3600) - (mins * 60);
-	}
-	ConvertedTime['hrs'] = hrs;
-	ConvertedTime['mins'] = mins;
-	ConvertedTime['secs'] = secs;
+	ConvertedTime['hrs'] = Math.floor(seconds / 3600);
+	ConvertedTime['mins'] = Math.floor((seconds % 3600) / 60);
+	ConvertedTime['secs'] = seconds % 60;
 
 	return ConvertedTime;
 }
