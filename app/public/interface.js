@@ -96,7 +96,17 @@ new Sortable(gridDiv, {
 //*********************************************************
 
 home_icon.addEventListener("click", () => {
-  window.location.replace("index.html");
+  refreshKanban();
+  refreshReport();
+  refreshTaskList();
+  timer.style.display = "block";
+  addtasks.style.display = "block";
+  report.style.display = "block";
+  kanban.style.display = "flex";
+  faq.style.display = "none";
+  info_1.style.display = "none";
+  show_faq = false;
+  show_info = false;
 });
 
 timer_icon.addEventListener("click", () => {
