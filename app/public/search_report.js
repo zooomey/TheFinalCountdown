@@ -83,7 +83,7 @@ function refreshReport(){
 						mins = ConvertedTime['mins'];
 						secs = ConvertedTime['secs'];
 
-							task_cell.textContent = task.taskname;
+							task_cell.textContent = task.taskname + " ";
 
 							var time_div = document.createElement("div");
 							time_cell.appendChild(time_div);
@@ -114,6 +114,10 @@ function refreshReport(){
 								task_cell.setAttribute("style", "background-color: #00B961; padding: 5px; border-radius: 5px 0 0 5px;");
 								estimate_cell.setAttribute("style", "background-color: #00B961; padding: 5px; font-style: italic");
 								time_div.setAttribute("style", "background-color: #00B961; padding: 5px; border-radius: 0 10px 10px 0; width: " + time_width + "%");
+								var star = document.createElement("img");
+								task_cell.appendChild(star);
+								star.setAttribute("src", "img/star.png");
+								star.setAttribute("height", "15px");
 							}
 							else {
 								todo++;
