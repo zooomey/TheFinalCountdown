@@ -104,7 +104,7 @@ function refreshReport(){
 								time_div.setAttribute("style", "background-color: #ea8c8c; padding: 5px; border-radius: 0 10px 10px 0; width: " + time_width + "%");
 							}
 							else if (task.inprogress){
-								inprogress = 0;
+								inprogress++;
 								task_cell.setAttribute("style", "background-color: #ffdb5b; padding: 5px; border-radius: 5px 0 0 5px;");
 								estimate_cell.setAttribute("style", "background-color: #ffdb5b; padding: 5px; font-style: italic");
 								time_div.setAttribute("style", "background-color: #ffdb5b; padding: 5px; border-radius: 0 10px 10px 0; width: " + time_width + "%");
@@ -141,10 +141,10 @@ function refreshReport(){
 								time_div_table_cell1.textContent = "";
 							}
 							var total = abandoned + todo + inprogress + completed;
-							var abandoned_width = Math.round((abandoned / total) * 100);
-							var todo_width = Math.round((todo / total) * 100);
-							var inprogress_width = Math.round((inprogress / total) * 100);
-							var completed_width = Math.round((completed / total) * 100);
+							var abandoned_width = ((abandoned / total) * 100).toFixed(1);
+							var todo_width = ((todo / total) * 100).toFixed(1);
+							var inprogress_width = ((inprogress / total) * 100).toFixed(1);
+							var completed_width = ((completed / total) * 100).toFixed(1);
 							if (total == 0){
 								abandoned_width = 0;
 								todo_width = 0;
