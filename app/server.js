@@ -12,13 +12,79 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
 
+let saltRounds = 10;
+let sessionCookies = [];
+
 let pool = new Pool(env);
 pool.connect().then(() => {
     console.log(`Connected to database ${env.database}`);
-});
 
-let saltRounds = 10;
-let sessionCookies = [];
+    // Generate demonstration data
+    pool.query("SELECT * FROM users WHERE username = 'demo'").then((demo) => {
+      // If it's > 1 demonstration data likely already exists.
+      if (demo.rows.length === 0) {
+        bcrypt.hash("demopass", saltRounds).then((hashedPassword) => {
+          pool.query(
+            "INSERT INTO users (username, hashed_password) VALUES ($1, $2) RETURNING id",
+            ["demo", hashedPassword]
+          ).then((user) => {
+            let userid = user.rows[0].id;
+            let tasks = [
+              [userid, "MATH130 problems",         "Three page paper for ENGL103 due next week", 2400, 0,     false, false, false],
+              [userid, "Update resume",            "Add new skills",                             1200, 0,     false, false, false],
+              [userid, "ENG125 paper",             "Four page paper",                            6000, 3600,  true,  false, false],
+              [userid, "PHIL210 discussion board", "Respond to two posts",                       2400, 1800,  true,  false, false],
+              [userid, "ENGL103 paper",            "Three page paper on the reading",            5400, 6300,  false, true,  false],
+              [userid, "MATH130 reading",          "Chapters 6, 7",                              1800, 1200,  false, true,  false],
+              [userid, "MATH130 extra credit",     "Extra credit assignment",                    3000, 12900, false, false, true]
+            ];
+            let sessions = [
+              [2, 1800],
+              [2, 1800],
+              [3, 1800],
+              [4, 1800],
+              [4, 1800],
+              [4, 1800],
+              [4, 900],
+              [5, 1200],
+              [6, 1800],
+              [6, 1800],
+              [6, 1800],
+              [6, 1800],
+              [6, 1800],
+              [6, 1800],
+              [6, 1800],
+              [6, 300]
+            ]
+            for (let i = 0; i < tasks.length; i++) {
+              pool.query(
+                "INSERT INTO tasks (userID, taskname, description, estimate, total, inprogress, completed, abandoned) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING taskid",
+                tasks[i]
+              ).then((task) => {
+                for (let session of sessions) {
+                  if (session[0] === i) {
+                    pool.query(
+                      "INSERT INTO sessions (userID, taskID, seconds, start_date, stop_date) VALUES ($1, $2, $3, $4, $4)",
+                      [userid, task.rows[0].taskid, session[1], "2022-11-07 11:11:11-11"]
+                    ).catch((error) => {
+                      console.log(error);
+                    });
+                  }
+                }
+              }).catch(() => {});
+            }
+            console.log("Demonstration data created.");
+          }).catch((error) => {
+            console.log("Demonstration data population failed.")
+          });
+        }).catch((error) => {
+          console.log("Demonstration data population failed.")
+        });
+      }
+    }).catch((error) => {
+      console.log("Demonstration data population failed.")
+    });
+});
 
 
 app.post("/signup", (req, res) => {
