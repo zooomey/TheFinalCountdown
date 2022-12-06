@@ -5,6 +5,7 @@ Instructions on running our app:
 - This makefile should install all necessary packages, as well as run setup.sql, which will create the DB.
 - -> You will likely need to log into postgres.
 - -> cd into app, and run node server.js. This will start our server.
+- Demo data is already included in the application. Log in with username: demo and password: demopass.
 
 
 Troubleshooting:
